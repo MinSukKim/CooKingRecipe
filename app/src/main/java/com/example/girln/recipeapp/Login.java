@@ -29,7 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class Login extends AppCompatActivity {
 
     SignInButton G_button;
-    Button Guest;
+//    Button Guest;
     FirebaseAuth mAuth;
     private final static int RC_SIGN_IN = 2;
     GoogleApiClient mGoogleApiClient;
