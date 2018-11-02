@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "800789675248",
+    "firebase_url": "https://posd-befe7.firebaseio.com",
+    "project_id": "posd-befe7",
+    "storage_bucket": "posd-befe7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800789675248:android:34486648341f30f4",
+        "android_client_info": {
+          "package_name": "com.example.girln.recipeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800789675248-05jn4248bav29b0vg0nb51rcsjmgs0hg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.girln.recipeapp",
+            "certificate_hash": "cfdced7c97922773616b8f6cda60a45f8a569370"
+          }
+        },
+        {
+          "client_id": "800789675248-0dv81n2asuvv0f2ou6lrum573m508mnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtSKrNXZMuEh6W7w3BWZsq9FT37pdFexs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800789675248-0dv81n2asuvv0f2ou6lrum573m508mnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
