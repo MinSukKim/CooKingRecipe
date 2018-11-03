@@ -13,8 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,15 +47,25 @@ public class main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+
+        TextView s_name = (TextView)header.findViewById(R.id.name);
+        TextView s_email = (TextView)header.findViewById(R.id.email);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+
+                String uid = profile.getUid();
+
+                String name = profile.getDisplayName();
+                String email = profile.getEmail();
+                s_name.setText(name);
+                s_email.setText(email);
+            }
+        }
     }
 
-    private void logout(){
-        FirebaseAuth.getInstance().signOut();
-
-//        Intent intent = new Intent(getApplicationContext(), main.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(new Intent(main.this, Login.class));
-    }
 
     @Override
     public void onBackPressed() {
@@ -100,7 +114,14 @@ public class main extends AppCompatActivity
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_logout) {
-            logout();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if(user != null){
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(main.this, Login.class));
+            }
+            else{
+                Toast.makeText(main.this, "No user.", Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.nav_shared) {
 
         } else if (id == R.id.nav_message) {
