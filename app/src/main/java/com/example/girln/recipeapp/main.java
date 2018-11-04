@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,13 +25,25 @@ import com.google.firebase.auth.UserInfo;
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Fragment basicFragment;
+    private Fragment profileFragment;
+    private Fragment myRecipeFragment;
+    private Fragment activityFragment;
+    private Fragment settingFragment;
+    private Fragment sharedFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        basicFragment = new basic();
+        profileFragment = new profile();
+        myRecipeFragment = new myRecipe();
+        activityFragment = new activity();
+        settingFragment = new setting();
+        sharedFragment = new shared();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -39,21 +53,27 @@ public class main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
 
-        TextView s_name = (TextView)header.findViewById(R.id.name);
-        TextView s_email = (TextView)header.findViewById(R.id.email);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container, basicFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null) {
-            for (UserInfo profile : user.getProviderData()) {
-
-                String name = profile.getDisplayName();
-                String email = profile.getEmail();
-                s_name.setText(name);
-                s_email.setText(email);
-            }
-        }
+//        View header = navigationView.getHeaderView(0);
+//
+//        TextView s_name = (TextView)header.findViewById(R.id.name);
+//        TextView s_email = (TextView)header.findViewById(R.id.email);
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user != null) {
+//            for (UserInfo profile : user.getProviderData()) {
+//
+//                String name = profile.getDisplayName();
+//                String email = profile.getEmail();
+//                s_name.setText(name);
+//                s_email.setText(email);
+//            }
+//        }
     }
 
 
@@ -95,31 +115,38 @@ public class main extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         if (id == R.id.nav_profile) {
             // Handle the camera action
+            transaction.replace(R.id.container, profileFragment);
         } else if (id == R.id.nav_recipe) {
-
+            transaction.replace(R.id.container, myRecipeFragment);
         } else if (id == R.id.nav_activity) {
-
+            transaction.replace(R.id.container, activityFragment);
         } else if (id == R.id.nav_setting) {
-
+            transaction.replace(R.id.container, settingFragment);
         } else if (id == R.id.nav_logout) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if(user != null){
+            if (user != null) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(main.this, Login.class));
-            }
-            else{
+            } else {
                 Toast.makeText(main.this, "No user.", Toast.LENGTH_SHORT).show();
             }
         } else if (id == R.id.nav_shared) {
-
-        } else if (id == R.id.nav_message) {
-
+            transaction.replace(R.id.container, sharedFragment);
         }
+//        } else if (id == R.id.nav_message) {
+//            transaction.replace(R.id.container, profileFragment);
+//        }
+
+        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
 }
+
