@@ -74,9 +74,7 @@ public class basic extends Fragment {
 
     }
 
-    public class viewHolder(View v){
 
-    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
