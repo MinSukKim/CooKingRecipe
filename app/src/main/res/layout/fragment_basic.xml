@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardview3"
+            android:id="@+id/card_simple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -47,7 +47,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardview2"
+            android:id="@+id/card_recent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -71,7 +71,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardview4"
+            android:id="@+id/card_popular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -95,7 +95,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardview"
+            android:id="@+id/card_recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
