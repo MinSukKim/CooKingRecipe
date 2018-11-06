@@ -73,6 +73,9 @@ public class basic extends Fragment {
 //        return inflater.inflate(R.layout.fragment_basic, container, false);
 
     }
+    public cardholder(){
+
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
