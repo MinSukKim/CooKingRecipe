@@ -1,18 +1,14 @@
 package com.example.girln.recipeapp;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 
 /**
@@ -23,7 +19,7 @@ import com.google.firebase.storage.StorageReference;
  * Use the {@link basic#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class basic extends Fragment {
+public class basic extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,29 +78,51 @@ public class basic extends Fragment {
         ImageView popular = (ImageView) view.findViewById(R.id.popular);
         ImageView recommend = (ImageView) view.findViewById(R.id.recommend);
 
-        StorageReference ref = FirebaseStorage.getInstance().getReference("recommend.JPG");
+        simple.setOnClickListener(this);
+        recent.setOnClickListener(this);
+        popular.setOnClickListener(this);
+        recommend.setOnClickListener(this);
 
-        GlideApp.with(this)
-                .load(ref)
-                .into(simple);
-
-        GlideApp.with(this)
-                .load(ref)
-                .into(recent);
-
-        GlideApp.with(this)
-                .load(ref)
-                .into(recommend);
-
-        GlideApp.with(this)
-                .load(ref)
-                .into(popular);
+//
+//        StorageReference ref = FirebaseStorage.getInstance().getReference("recommend.JPG");
+//
+//        GlideApp.with(this)
+//                .load(ref)
+//                .into(simple);
+//
+//        GlideApp.with(this)
+//                .load(ref)
+//                .into(recent);
+//
+//        GlideApp.with(this)
+//                .load(ref)
+//                .into(recommend);
+//
+//        GlideApp.with(this)
+//                .load(ref)
+//                .into(popular);
 
 
         return view;
 
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.recent) {
+            Intent intent = new Intent(getActivity().getApplicationContext(), recent.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.recommend) {
+            Intent intent = new Intent(getActivity().getApplicationContext(), recommend.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.popular) {
+            Intent intent = new Intent(getActivity().getApplicationContext(), popular.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.simple) {
+            Intent intent = new Intent(getActivity().getApplicationContext(), simple.class);
+            startActivity(intent);
+        }
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event

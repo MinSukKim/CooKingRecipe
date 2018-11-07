@@ -27,7 +27,7 @@
             android:layout_margin="3dp"
             android:scaleType="fitXY"
             android:visibility="visible"
-            />
+            app:srcCompat="@drawable/garlic_chicken_pasta" />
 
 
         <ImageView
@@ -37,7 +37,8 @@
             android:layout_margin="3dp"
             android:scaleType="fitXY"
             android:visibility="visible"
-            tools:visitiliby="visible"/>
+            app:srcCompat="@drawable/recommend"
+            tools:visitiliby="visible" />
 
 
         <ImageView
@@ -47,6 +48,7 @@
             android:layout_margin="3dp"
             android:scaleType="fitXY"
             android:visibility="visible"
+            app:srcCompat="@drawable/garlic_chicken_pasta"
             tools:visitiliby="visible" />
 
 
@@ -57,8 +59,8 @@
             android:layout_margin="3dp"
             android:scaleType="fitXY"
             android:visibility="visible"
-            tools:visitiliby="visible"
-             />
+            app:srcCompat="@drawable/recommend"
+            tools:visitiliby="visible" />
 
 
     </LinearLayout>

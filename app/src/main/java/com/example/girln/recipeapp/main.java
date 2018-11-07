@@ -1,14 +1,10 @@
 package com.example.girln.recipeapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,25 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.InputStream;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment basicFragment;
     private Fragment profileFragment;
-    private Fragment myRecipeFragment;
+
     private Fragment activityFragment;
     private Fragment settingFragment;
     private Fragment sharedFragment;
@@ -45,9 +33,9 @@ public class main extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         basicFragment = new basic();
         profileFragment = new profile();
-        myRecipeFragment = new myRecipe();
         activityFragment = new activity();
         settingFragment = new setting();
         sharedFragment = new shared();
@@ -129,7 +117,9 @@ public class main extends AppCompatActivity
             // Handle the camera action
             transaction.replace(R.id.container, profileFragment);
         } else if (id == R.id.nav_recipe) {
-            transaction.replace(R.id.container, myRecipeFragment);
+            Intent intent = new Intent(getApplicationContext(), MyRecipe.class);
+            startActivity(intent);
+//            startActivity(new Intent(main.this, MyRecipe.class));
         } else if (id == R.id.nav_activity) {
             transaction.replace(R.id.container, activityFragment);
         } else if (id == R.id.nav_setting) {
