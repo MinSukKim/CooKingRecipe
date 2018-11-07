@@ -84,12 +84,12 @@ public class myRecipe extends Fragment {
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 //    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     /**
      * This interface must be implemented by activities that contain this

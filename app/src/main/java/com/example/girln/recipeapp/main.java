@@ -1,5 +1,6 @@
 package com.example.girln.recipeapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,12 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.InputStream;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +66,7 @@ public class main extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
+        Toast.makeText(main.this,"hmm",Toast.LENGTH_SHORT).show();
 //        View header = navigationView.getHeaderView(0);
 //
 //        TextView s_name = (TextView)header.findViewById(R.id.name);
@@ -148,5 +156,6 @@ public class main extends AppCompatActivity
         return true;
 
     }
+
 }
 

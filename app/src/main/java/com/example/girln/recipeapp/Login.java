@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         G_button = (SignInButton) findViewById(R.id.googleBtn);
-//        Guest = (Button) findViewById(R.id.Guest);
+//      Guest = (Button) findViewById(R.id.Guest);
 
         mAuth = FirebaseAuth.getInstance();
 

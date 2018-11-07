@@ -1,15 +1,15 @@
 package com.example.girln.recipeapp;
 
-import android.content.Context;
+
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -28,6 +28,9 @@ public class basic extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+    private String storage_ref;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -65,17 +68,43 @@ public class basic extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_basic, container, false);
+        View view = inflater.inflate(R.layout.fragment_basic, container, false);
+
+        ImageView simple = (ImageView) view.findViewById(R.id.simple);
+        ImageView recent = (ImageView) view.findViewById(R.id.recent);
+        ImageView popular = (ImageView) view.findViewById(R.id.popular);
+        ImageView recommend = (ImageView) view.findViewById(R.id.recommend);
+
+        StorageReference ref = FirebaseStorage.getInstance().getReference("recommend.JPG");
+
+        GlideApp.with(this)
+                .load(ref)
+                .into(simple);
+
+        GlideApp.with(this)
+                .load(ref)
+                .into(recent);
+
+        GlideApp.with(this)
+                .load(ref)
+                .into(recommend);
+
+        GlideApp.with(this)
+                .load(ref)
+                .into(popular);
+
+
+        return view;
 
     }
-    public cardholder(){
 
-    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
