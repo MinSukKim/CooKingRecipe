@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
     private ArrayList<item_recipe> item_recipeArrayList;
 
     MyAdapter(ArrayList<item_recipe> item_recipeArrayList) {
