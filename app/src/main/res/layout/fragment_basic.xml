@@ -43,14 +43,15 @@
                 android:layout_margin="3dp"
                 android:scaleType="fitXY"
                 android:visibility="visible"
-                app:srcCompat="@drawable/recommend"
+
+                android:contentDescription="@string/todo"
                 tools:visitiliby="visible" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="200dp"
-                android:text="Recent"
+                android:text="@string/recent"
                 android:textAlignment="center"
                 android:textStyle="bold" />
         </android.support.v7.widget.CardView>
@@ -77,14 +78,15 @@
                 android:layout_margin="3dp"
                 android:scaleType="fitXY"
                 android:visibility="visible"
-                app:srcCompat="@drawable/garlic_chicken_pasta"
+
+                android:contentDescription="@string/todo"
                 tools:visitiliby="visible" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="200dp"
-                android:text="Popular"
+                android:text="@string/popular"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -96,9 +98,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Write" />
+            android:text="@string/write" />
 
     </LinearLayout>
 
 
-</FrameLayout>
+</FrameLayout><!--app:srcCompat="@drawable/garlic_chicken_pasta"--><!--app:srcCompat="@drawable/recommend"-->

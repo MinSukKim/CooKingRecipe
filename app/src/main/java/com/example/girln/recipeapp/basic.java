@@ -5,12 +5,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 /**
@@ -27,8 +34,7 @@ public class basic extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
-    private String storage_ref;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,24 +97,18 @@ public class basic extends Fragment implements View.OnClickListener {
         });
 
 
-//
-//        StorageReference ref = FirebaseStorage.getInstance().getReference("recommend.JPG");
-//
-//        GlideApp.with(this)
-//                .load(ref)
-//                .into(simple);
-//
-//        GlideApp.with(this)
-//                .load(ref)
-//                .into(recent);
-//
-//        GlideApp.with(this)
-//                .load(ref)
-//                .into(recommend);
-//
-//        GlideApp.with(this)
-//                .load(ref)
-//                .into(popular);
+        StorageReference refSimple = storage.getReference("recommend.JPG");
+        StorageReference refPopular = storage.getReference("garlic_chicken_past.jpg");
+
+
+        GlideApp.with(this)
+                .load(refSimple)
+                .into(recent);
+
+
+        GlideApp.with(this)
+                .load(refPopular)
+                .into(popular);
 
 
         return view;
@@ -123,8 +123,6 @@ public class basic extends Fragment implements View.OnClickListener {
         } else if (v.getId() == R.id.popular) {
             Intent intent = new Intent(getActivity().getApplicationContext(), popular.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.write) {
-
         }
     }
 

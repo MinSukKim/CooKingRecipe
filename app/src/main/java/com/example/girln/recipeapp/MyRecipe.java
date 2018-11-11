@@ -30,12 +30,14 @@ public class MyRecipe extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         ArrayList<item_recipe> item_recipeArrayList = new ArrayList<>();
-        item_recipeArrayList.add(new item_recipe(R.drawable.strawberry, "5,000원"));
-        item_recipeArrayList.add(new item_recipe(R.drawable.bread, "4,600원"));
-        item_recipeArrayList.add(new item_recipe(R.drawable.noodle, "4,000원"));
+        item_recipeArrayList.add(new item_recipe(R.drawable.strawberry, "5,000원", "0", "#hey"));
+        item_recipeArrayList.add(new item_recipe(R.drawable.bread, "4,600원", "0", "#ho"));
+        item_recipeArrayList.add(new item_recipe(R.drawable.noodle, "4,000원", "0", "#yo"));
 
         MyAdapter myAdapter = new MyAdapter(item_recipeArrayList);
 
         mRecyclerView.setAdapter(myAdapter);
+
+
     }
 }

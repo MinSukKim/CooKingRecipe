@@ -3,10 +3,14 @@ package com.example.girln.recipeapp;
 public class item_recipe {
 
     public int drawableId;
-    public String price;
+    public String title;
+    public String rate;
+    public String tags;
 
-    public item_recipe(int drawableId, String price) {
+    public item_recipe(int drawableId, String title, String rate, String tags) {
         this.drawableId = drawableId;
-        this.price = price;
+        this.title = title;
+        this.rate = rate;
+        this.tags = tags;
     }
 }

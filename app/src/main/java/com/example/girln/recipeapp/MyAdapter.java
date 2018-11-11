@@ -32,7 +32,9 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 
         myViewHolder.ivPicture.setImageResource(item_recipeArrayList.get(position).drawableId);
-        myViewHolder.tvPrice.setText(item_recipeArrayList.get(position).price);
+        myViewHolder.tvtitle.setText(item_recipeArrayList.get(position).title);
+        myViewHolder.tvrate.setText(item_recipeArrayList.get(position).rate);
+        myViewHolder.tvtags.setText(item_recipeArrayList.get(position).tags);
     }
 
     @Override
@@ -42,12 +44,16 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView ivPicture;
-        TextView tvPrice;
+        TextView tvtitle;
+        TextView tvrate;
+        TextView tvtags;
 
         MyViewHolder(View view) {
             super(view);
             ivPicture = view.findViewById(R.id.iv_picture);
-            tvPrice = view.findViewById(R.id.tv_price);
+            tvtitle = view.findViewById(R.id.tv_title);
+            tvrate = view.findViewById(R.id.tv_rate);
+            tvtags = view.findViewById(R.id.tv_tags);
         }
     }
 }
