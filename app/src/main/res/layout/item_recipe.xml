@@ -101,5 +101,3 @@
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
-
-    <!--<TextView--><!--android:id="@+id/tv_rate"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_gravity="center_vertical"--><!--android:layout_margin="1dp"--><!--android:textSize="14sp"--><!--tools:text="RateRateRateRateRate" />-->
