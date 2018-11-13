@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         G_button = (SignInButton) findViewById(R.id.googleBtn);
-//      Guest = (Button) findViewById(R.id.Guest);
+        Guest = (Button) findViewById(R.id.Guest);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -55,6 +55,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 signIn();
+            }
+        });
+
+        Guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, main.class));
+                Toast.makeText(Login.this, "Guest Login", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -82,8 +90,6 @@ public class Login extends AppCompatActivity {
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
     }
-
-
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -134,7 +140,3 @@ public class Login extends AppCompatActivity {
     }
 
 }
-
-
-
-

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +23,6 @@ public class main extends AppCompatActivity
 
     private Fragment basicFragment;
     private Fragment profileFragment;
-
     private Fragment activityFragment;
     private Fragment settingFragment;
     private Fragment sharedFragment;
@@ -33,6 +33,9 @@ public class main extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        TextView tbTitle = (TextView) findViewById(R.id.toolbarTitle);
+        tbTitle.setText("Recipe");
 
         basicFragment = new basic();
         profileFragment = new profile();
@@ -54,22 +57,6 @@ public class main extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
-        Toast.makeText(main.this,"hmm",Toast.LENGTH_SHORT).show();
-//        View header = navigationView.getHeaderView(0);
-//
-//        TextView s_name = (TextView)header.findViewById(R.id.name);
-//        TextView s_email = (TextView)header.findViewById(R.id.email);
-//
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if(user != null) {
-//            for (UserInfo profile : user.getProviderData()) {
-//
-//                String name = profile.getDisplayName();
-//                String email = profile.getEmail();
-//                s_name.setText(name);
-//                s_email.setText(email);
-//            }
-//        }
     }
 
 
@@ -130,7 +117,8 @@ public class main extends AppCompatActivity
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(main.this, Login.class));
             } else {
-                Toast.makeText(main.this, "No user.", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(main.this, "You are a guest..", Toast.LENGTH_SHORT).show();
             }
         } else if (id == R.id.nav_shared) {
             transaction.replace(R.id.container, sharedFragment);

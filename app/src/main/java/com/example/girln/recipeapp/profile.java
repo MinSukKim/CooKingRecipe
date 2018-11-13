@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -86,17 +87,23 @@ public class profile extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                user.delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("TAG", "User account deleted.");
-                                    startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
+                if (user != null) {
+                    user.delete()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("TAG", "User account deleted.");
+                                        FirebaseAuth.getInstance().signOut();
+                                        startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
 
+                                    }
                                 }
-                            }
-                        });
+                            });
+                } else {
+                    Toast.makeText(getActivity(), "You are a guest", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity().getApplicationContext(), main.class));
+                }
             }
 
         });

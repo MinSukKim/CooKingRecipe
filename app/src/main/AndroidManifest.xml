@@ -20,12 +20,12 @@
             android:name=".main"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MyRecipe" />
         <activity android:name=".popular" />
         <activity android:name=".recent" />
         <activity android:name=".recommend" />
         <activity android:name=".simple" />
-        <activity android:name=".Upload"></activity>
+        <activity android:name=".Upload" />
+        <activity android:name=".Detailrecipe"></activity>
     </application>
 
 </manifest>

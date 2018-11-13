@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.annotation.GlideModule;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -96,20 +99,18 @@ public class basic extends Fragment implements View.OnClickListener {
             }
         });
 
-
+        //have to change the pics, and name should be changed as well.
         StorageReference refSimple = storage.getReference("recommend.JPG");
-        StorageReference refPopular = storage.getReference("garlic_chicken_past.jpg");
+        StorageReference refPopular = storage.getReference("garlic_chicken_pasta.jpg");
 
 
-        GlideApp.with(this)
+        GlideApp.with(view)
                 .load(refSimple)
                 .into(recent);
 
-
-        GlideApp.with(this)
+        GlideApp.with(view)
                 .load(refPopular)
                 .into(popular);
-
 
         return view;
 
