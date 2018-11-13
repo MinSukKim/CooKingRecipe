@@ -44,13 +44,20 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         GlideApp.with(context)
                 .load(myUri)
+                .override(160, 80)
                 .into(myViewHolder.ivPicture);
 
         myViewHolder.tvtitle.setText(item_recipeArrayList.get(position).title);
         myViewHolder.tvRate.setRating(round(item_recipeArrayList.get(position).rate));
         myViewHolder.tvtags.setText(item_recipeArrayList.get(position).tags);
 
-
+        ((MyViewHolder) holder).tvtitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Detailrecipe.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
