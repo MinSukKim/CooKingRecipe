@@ -13,6 +13,7 @@ public class item_recipe {
     public boolean shared;
     public String author;
     public String tags;
+    public int key;
 //    public ArrayList<tagsModel> tags;
 ////    public ArrayList<ingredientsModel> ingredients;
 ////    public ArrayList<StepsModel> Steps;
@@ -21,11 +22,12 @@ public class item_recipe {
         //Default constructor
     }
 
-    public item_recipe(String drawabled, String title, double rate, String tags) {
+    public item_recipe(String drawabled, String title, double rate, String tags, int key) {
         this.drawabled = drawabled;
         this.title = title;
         this.rate = rate;
         this.tags = tags;
+        this.key = key;
 
     }
 

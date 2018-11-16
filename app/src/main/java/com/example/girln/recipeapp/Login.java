@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     SignInButton G_button;
     Button Guest;
     FirebaseAuth mAuth;
-    private final static int RC_SIGN_IN = 2;
+    private final static int RC_SIGN_IN = 1;
     GoogleApiClient mGoogleApiClient;
     FirebaseAuth.AuthStateListener mAuthListener;
 
