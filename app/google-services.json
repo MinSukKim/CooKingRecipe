@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "800789675248-helljqf7fc1ak97d6v71miqfjgfrsbih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.girln.recipeapp",
+            "certificate_hash": "241abee6e3e803fda64b5609410982e74cea6030"
+          }
+        },
+        {
           "client_id": "800789675248-0dv81n2asuvv0f2ou6lrum573m508mnq.apps.googleusercontent.com",
           "client_type": 3
         }

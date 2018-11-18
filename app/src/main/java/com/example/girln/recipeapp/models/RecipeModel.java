@@ -39,6 +39,13 @@ public class RecipeModel {
             cookingTags.add(new CookingTagsModel(i));
         }
     }
+
+    public RecipeModel(String recipeName, String userID, Boolean priv) {
+        init();
+        this.recipeName = recipeName;
+        this.userID = userID;
+        this.priv = priv;
+    }
     //ArrayList<CookingTimeModel> cookingTime;
 
     public String getRecipeName() {
