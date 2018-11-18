@@ -31,8 +31,8 @@ public class item_recipe {
         this.rate = rate;
         this.cookingIngredients = cookingIngredients;
         this.cookingSteps = cookingSteps;
-//        this.cookingTags = tags;
-        getTags(tags);
+        this.cookingTags = tags;
+//        getTags(tags);
 
         this.key = key;
 //        System.out.println(this.cookingTags.size());
@@ -41,14 +41,14 @@ public class item_recipe {
         System.out.println(cookingSteps);
     }
 
-    public void getTags(ArrayList tags) {
-        int num = tags.size();
-        for (int i = 0; i < num; i++) {
-            String item = tags.get(i).toString().split("tagName=")[1];
-            System.out.println(item);
-            this.cookingTags.add(item);
-        }
-    }
+    //    public void getTags(ArrayList tags) {
+//        int num = tags.size();
+//        for (int i = 0; i < num; i++) {
+//            String item = tags.get(i).toString().split("tagName=")[1];
+//            System.out.println(item);
+//            this.cookingTags.add(item);
+//        }
+//    }
     public String getTitle() {
         return title;
     }
