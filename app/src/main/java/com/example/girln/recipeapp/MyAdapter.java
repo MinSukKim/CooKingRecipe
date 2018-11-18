@@ -37,6 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private FirebaseDatabase firebase = FirebaseDatabase.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference fb = firebase.getReference();
 
     MyAdapter(ArrayList<item_recipe> item_recipeArrayList) {
         this.item_recipeArrayList = item_recipeArrayList;
@@ -55,50 +56,55 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 
-        final String key = Integer.toString((item_recipeArrayList.get(position).key));
-        System.out.println(key);
-        Uri myUri = Uri.parse(item_recipeArrayList.get(position).drawabled);
+        final String key = (item_recipeArrayList.get(position).key);
+//        System.out.println(key);
+//        System.out.println(item_recipeArrayList.get(position).cookingPictures);
+//        System.out.println(item_recipeArrayList.get(position).title);
+        if (item_recipeArrayList.get(position).cookingPictures == null) {
+            Uri myUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/posd-befe7.appspot.com/o/RageFace.jpg?alt=media&token=4a7074c3-4f54-46fa-b515-8fcd3acc2613");
+            GlideApp.with(context)
+                    .load(myUri)
+                    .override(160, 80)
+                    .into(myViewHolder.ivPicture);
+        }
         final double rate = round(item_recipeArrayList.get(position).rate);
-        GlideApp.with(context)
-                .load(myUri)
-                .override(160, 80)
-                .into(myViewHolder.ivPicture);
         final String title = item_recipeArrayList.get(position).title;
-        final String uri = item_recipeArrayList.get(position).drawabled;
-
+//        final String uri = item_recipeArrayList.get(position).drawabled;
+//
         myViewHolder.tvtitle.setText(item_recipeArrayList.get(position).title);
         myViewHolder.tvRate.setRating(round(rate));
-        myViewHolder.tvtags.setText(item_recipeArrayList.get(position).tags);
-
+//        myViewHolder.tvtags.setText(item_recipeArrayList.get(position).cookingTags);
+//
         ((MyViewHolder) holder).tvtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Detailrecipe.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("title", title);
-                bundle.putString("img", uri);
+//                bundle.putString("img", uri);
                 bundle.putDouble("rate", rate);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
 
-        ((MyViewHolder) holder).deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseReference fb = firebase.getReference();
-                System.out.println(title);
-                fb = FirebaseDatabase.getInstance().getReference().child("Recipes").child(key);
-                System.out.println(fb);
-                fb.removeValue();
-            }
-        });
-
+//        ((MyViewHolder) holder).deleteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                System.out.println(title);
+//                fb = FirebaseDatabase.getInstance().getReference().child("Recipes").child(key);
+//                System.out.println(fb);
+//                fb.removeValue();
+//            }
+//        });
+//
         ((MyViewHolder) holder).editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, Detailrecipe.class);
-                context.startActivity(intent);
+
+                //Edit Page
+//                Intent intent = new Intent(context, Detailrecipe.class);
+//                context.startActivity(intent);
             }
         });
     }

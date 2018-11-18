@@ -1,4 +1,3 @@
-
 package com.example.girln.recipeapp;
 
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -22,9 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MyRecipe extends AppCompatActivity {
 
@@ -35,10 +37,9 @@ public class MyRecipe extends AppCompatActivity {
     private ArrayList<item_recipe> item_recipeArrayList = new ArrayList<>();
     private List RList;
     private Map tmp;
-    private final String nullImg = "https://firebasestorage.googleapis.com/v0/b/posd-befe7.appspot.com/o/RageFace.jpg?alt=media&token=4a7074c3-4f54-46fa-b515-8fcd3acc2613";
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String rEmail = null;
-    ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,30 +71,28 @@ public class MyRecipe extends AppCompatActivity {
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                RList = (List) dataSnapshot.child("Recipes").getValue();
-                int num = RList.size() - 1;
-                int cnt = 0;
-                while (num > 0) {
-                    tmp = (HashMap) RList.get(num);
-                    System.out.println(tmp);
-                    String val = (String) tmp.get("title");
-                    String aut = (String) tmp.get("Author");
-                    String img = (String) tmp.get("Pics");
-                    if (img == null) {
-                        img = nullImg;
-                    }
+                Object RList = dataSnapshot.child("Recipes").getValue();
+                List<String> keyList = new ArrayList<String>();
+                tmp = (HashMap) RList;
+                keyList.addAll(tmp.keySet());
+                for (String key : keyList) {
+                    Map n = (HashMap) tmp.get(key);
+
+                    String uid = (String) n.get("userID");
+                    String title = (String) n.get("recipeName");
+                    ArrayList pic = (ArrayList) n.get("cookingPictures");
+                    ArrayList inge = (ArrayList) n.get("cookingIngredients");
+                    ArrayList steps = (ArrayList) n.get("cookingSteps");
+                    ArrayList tags = (ArrayList) n.get("cookingTags");
+
                     if (user != null) {
                         for (UserInfo rUser : user.getProviderData()) {
-                            rEmail = rUser.getEmail();
+                            if (uid.equals(rUser.getUid())) {
+                                item_recipeArrayList.add(new item_recipe(uid, pic, title, 0.0, inge, steps, tags, key));
+                            }
                         }
                     }
-                    if (aut.equals(rEmail) && rEmail != null) {
-                        item_recipeArrayList.add(new item_recipe(img, val, 1, "#data", num));
-                        cnt++;
-                    }
-                    num--;
                 }
-                tvTotal.setText("Total: " + cnt);
                 MyAdapter myAdapter = new MyAdapter(item_recipeArrayList);
                 mRecyclerView.setAdapter(myAdapter);
             }
