@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.girln.recipeapp.models.CookingIngredientModel;
 import com.example.girln.recipeapp.models.CookingPicturesURL;
 import com.example.girln.recipeapp.models.CookingStepsModel;
@@ -177,7 +178,7 @@ public class Upload extends AppCompatActivity {
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                            progressDialog.setMessage("Uploaded Picture " + (int) progress + "%");
                         }
                     });
         }
@@ -186,8 +187,8 @@ public class Upload extends AppCompatActivity {
     public void uploadRecipe(View v) {
         convertRecipe();
         mData.getReference().child("Recipes").push().setValue(recipe);
-        Toast.makeText(Upload.this, "Uploaded", Toast.LENGTH_SHORT).show();
-        //todo go back to main and display message
+        Toast.makeText(Upload.this, "Uploaded Recipe", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     public void addTagField(View v) {
