@@ -131,6 +131,7 @@ public class Upload extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        uploadImage(v);
     }
 
     @Override
@@ -182,10 +183,11 @@ public class Upload extends AppCompatActivity {
                     });
         }
     }
-
+//todo only accessible if image is uploaded /upload only doable once
     public void uploadRecipe(View v) {
         convertRecipe();
         mData.getReference().child("Recipes").push().setValue(recipe);
+        Toast.makeText(Upload.this, "Uploaded", Toast.LENGTH_SHORT).show();
         //todo go back to main and display message
     }
 

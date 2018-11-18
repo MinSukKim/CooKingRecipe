@@ -19,6 +19,8 @@ public class IngredientUnitConverter {
             return IngredientUnit.TABLESPOON;
         else if(unit.equals(IngredientUnit.TEASPOON.toString()))
             return IngredientUnit.TEASPOON;
+        else if(unit.equals(IngredientUnit.UNIT.toString()))
+            return IngredientUnit.UNIT;
         else return null;
     }
 }
