@@ -10,12 +10,14 @@ public class RecipeModel {
     private ArrayList<CookingIngredientModel> cookingIngredients;
     private ArrayList<CookingStepsModel> cookingSteps;
     private ArrayList<CookingTagsModel> cookingTags;
+    private ArrayList<CookingPicturesURL> cookingPictures;
 
     private void init()
     {
         cookingIngredients=new ArrayList<>();
         cookingSteps=new ArrayList<>();
         cookingTags=new ArrayList<>();
+        cookingPictures=new ArrayList<>();
     }
     public RecipeModel() {
         init();
@@ -47,6 +49,15 @@ public class RecipeModel {
         this.priv = priv;
     }
     //ArrayList<CookingTimeModel> cookingTime;
+
+
+    public ArrayList<CookingPicturesURL> getCookingPictures() {
+        return cookingPictures;
+    }
+
+    public void setCookingPictures(ArrayList<CookingPicturesURL> cookingPictures) {
+        this.cookingPictures = cookingPictures;
+    }
 
     public String getRecipeName() {
         return recipeName;
