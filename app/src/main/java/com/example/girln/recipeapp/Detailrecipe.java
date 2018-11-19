@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 import static java.lang.Math.round;
 
 public class Detailrecipe extends AppCompatActivity {
@@ -17,40 +19,34 @@ public class Detailrecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailrecipe);
-
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-        String title = bundle.getString("title");
-        String tmp = bundle.getString("img");
-        Uri myUri = Uri.parse(tmp);
-        double rate = bundle.getDouble("rate");
+        item_recipe tmp = (item_recipe) intent.getSerializableExtra("Object");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         TextView tbTitle = (TextView) findViewById(R.id.toolbarTitle);
-        tbTitle.setText(title);
-
+        tbTitle.setText(tmp.getTitle());
+        List img_list = tmp.getCookingPictures();
         ImageView img = (ImageView) findViewById(R.id.imageView2);
         GlideApp.with(this)
-                .load(myUri)
+                .load(img_list.get(0))
                 .into(img);
 
 
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvTitle.setText(title);
+        tvTitle.setText(tmp.getTitle());
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        ratingBar.setRating(round(rate));
+        ratingBar.setRating(round(tmp.getRate()));
 
         TextView tvIngredients = (TextView) findViewById(R.id.tvIngredients);
-//        tvIngredients.setText();
+        tvIngredients.setText(tmp.getCookingIngredients().toString());
 
         TextView tvSteps = (TextView) findViewById(R.id.tvSteps);
-//        tvSteps.setText();
+        tvSteps.setText(tmp.getCookingSteps().toString());
 
         TextView tvTags = (TextView) findViewById(R.id.tvTags);
-//        tvTags.setText();
+        tvTags.setText(tmp.getCookingTags().toString());
     }
 }
