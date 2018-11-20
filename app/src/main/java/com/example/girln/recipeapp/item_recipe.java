@@ -20,18 +20,20 @@ public class item_recipe implements Serializable {
     public String UserID = null;
     public List<Map> cookingIngredients = new ArrayList<>();
     public List<Map> cookingSteps = new ArrayList<>();
+    public boolean mypage = true;
 
     public item_recipe() {
         //Default constructor
     }
 
-    public item_recipe(String uid, ArrayList cookingPictures, String title, double rate, ArrayList cookingIngredients, ArrayList cookingSteps, ArrayList tags, String key) {
+    public item_recipe(String uid, ArrayList cookingPictures, String title, double rate, ArrayList cookingIngredients, ArrayList cookingSteps, ArrayList tags, String key, boolean mypage) {
         this.UserID = uid;
         this.title = title;
         this.key = key;
 
         this.rate = rate;
         this.cookingSteps = cookingSteps;
+        this.mypage = mypage;
 
         getTags(tags);
         getIngredients(cookingIngredients);
@@ -111,7 +113,7 @@ public class item_recipe implements Serializable {
     }
 
     public String getKey() {
-        return key;
+        return this.key;
     }
 
 }
