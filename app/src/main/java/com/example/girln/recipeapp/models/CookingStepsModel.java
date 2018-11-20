@@ -3,6 +3,9 @@ package com.example.girln.recipeapp.models;
 public class CookingStepsModel {
     private String description;
 
+    public CookingStepsModel() {
+    }
+
     public CookingStepsModel(CookingStepsModel i) {
         description=i.getDescription();
     }

@@ -7,6 +7,9 @@ public class CookingIngredientModel {
     private IngredientUnit unit;
     private double amount;
 
+    public CookingIngredientModel() {
+    }
+
     public CookingIngredientModel(CookingIngredientModel i) {
         ingredientName=i.getIngredientName();
         unit=i.getUnit();

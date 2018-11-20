@@ -3,6 +3,9 @@ package com.example.girln.recipeapp.models;
 public class CookingTagsModel {
     private String tagName;
 
+    public CookingTagsModel() {
+    }
+
     public CookingTagsModel(CookingTagsModel i) {
         tagName=i.getTagName();
     }

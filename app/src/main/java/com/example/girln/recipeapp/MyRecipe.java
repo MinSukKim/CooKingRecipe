@@ -88,7 +88,7 @@ public class MyRecipe extends AppCompatActivity {
                     if (user != null) {
                         for (UserInfo rUser : user.getProviderData()) {
                             if (uid.equals(rUser.getUid())) {
-                                item_recipeArrayList.add(new item_recipe(uid, pic, title, 0.0, inge, steps, tags, key));
+                                item_recipeArrayList.add(new item_recipe(uid, pic, title, 0.0, inge, steps, tags, key,true));
                             }
                         }
                     }

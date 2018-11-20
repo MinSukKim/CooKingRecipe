@@ -26,7 +26,9 @@
         <activity android:name=".recommend" />
         <activity android:name=".simple" />
         <activity android:name=".Upload" />
-        <activity android:name=".Detailrecipe"></activity>
+        <activity android:name=".Detailrecipe"/>
+        <activity android:name=".edit">
+        </activity>
     </application>
 
 </manifest>

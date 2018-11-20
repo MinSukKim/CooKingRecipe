@@ -163,7 +163,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:onClick="addIngredient"
+                        android:onClick="addIngredientField"
                         android:text="AddIngredient" />
 
                 </LinearLayout>
@@ -191,7 +191,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:onClick="addStep"
+                        android:onClick="addStepField"
                         android:text="AddStep" />
                 </LinearLayout>
 

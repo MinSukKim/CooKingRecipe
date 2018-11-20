@@ -99,11 +99,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((MyViewHolder) holder).editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                item_recipe tmp = new item_recipe();
-                tmp = item_recipeArrayList.get(positiont);
-//                Intent intent = new Intent(context, );
-//                intent.putExtra("Object", tmp);
-//                context.startActivity(intent);
+                System.out.println("test");
+                item_recipe tmp =(item_recipe) item_recipeArrayList.get(positiont);
+                String recipeID=tmp.getKey();
+                Intent intent = new Intent(context,edit.class );
+                intent.putExtra("recipeID", recipeID);
+               context.startActivity(intent);
             }
         });
     }
