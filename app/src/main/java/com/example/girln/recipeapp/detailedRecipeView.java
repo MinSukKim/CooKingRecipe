@@ -1,18 +1,19 @@
 package com.example.girln.recipeapp;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.CheckBox;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.girln.recipeapp.models.CommentModel;
 import com.example.girln.recipeapp.models.CookingIngredientModel;
 import com.example.girln.recipeapp.models.CookingPicturesURL;
 import com.example.girln.recipeapp.models.CookingStepsModel;
@@ -26,8 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.List;
-
 import static java.lang.Math.round;
 
 public class detailedRecipeView extends AppCompatActivity {
@@ -37,6 +36,8 @@ public class detailedRecipeView extends AppCompatActivity {
     private FirebaseAuth mUser;
     FirebaseStorage storage;
     StorageReference storageReference;
+    RatingBar ratingBar;
+    EditText commentField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class detailedRecipeView extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        ratingBar=(RatingBar) findViewById(R.id.ratingBar);
+        commentField=(EditText)  findViewById(R.id.commentTextField);
         getRecipe(recipeID);
     }
 
@@ -58,13 +61,17 @@ public class detailedRecipeView extends AppCompatActivity {
         TextView tbTitle = (TextView) findViewById(R.id.toolbarTitle);
         tbTitle.setText(recipe.getRecipeName());
         LinearLayout pictureLL = findViewById(R.id.imageShow);
+        //ImageView imageView3=findViewById(R.id.imageView3);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
         for (CookingPicturesURL picturesURL : recipe.getCookingPictures()) {
             ImageView pic = new ImageView(this);
+            /*Glide.with(this)
+                    .load(picturesURL)
+                    .into(pic);*/
+
             /*GlideApp.with(this)
                     .load(picturesURL)
                     .into(pic);*/
-            pic.setImageURI(Uri.parse(picturesURL.getPictureURL()));
             pic.setLayoutParams(lparams);
             pictureLL.addView(pic);
         }
@@ -72,7 +79,7 @@ public class detailedRecipeView extends AppCompatActivity {
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(recipe.getRecipeName());
 
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+
 
         LinearLayout ingredientList = findViewById(R.id.ingredientList);
 
@@ -137,6 +144,18 @@ public class detailedRecipeView extends AppCompatActivity {
             tagList.addView(singleTagLayout);
         }
 
+    }
+    public void rateRecipe(View v){
+        if(mUser.getUid()!=null)
+        mData.getReference().child("Ratings").child(recipeID).child(mUser.getUid()).setValue(ratingBar.getRating());
+        finish();
+    }
+    public void commentRecipe(View v)
+    {
+        if(mUser.getUid()!=null)
+        { CommentModel commentModel=new CommentModel(commentField.getText().toString(),mUser.getUid());
+            mData.getReference().child("Comments").child(recipeID).push().setValue(commentModel);
+        finish();}
     }
 
     public RecipeModel getRecipe(final String recipeID) {
