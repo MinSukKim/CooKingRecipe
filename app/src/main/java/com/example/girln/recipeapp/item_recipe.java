@@ -72,6 +72,11 @@ public class item_recipe implements Serializable {
             Map item = (HashMap) cookingIngredients.get(i);
             this.cookingIngredients.add(item);
         }
+//        for (Object cookingIngredient :
+//                cookingIngredients) {
+//            Map item = (HashMap) cookingIngredient;
+//            this.cookingIngredients.add(item)
+//        }
 
     }
 

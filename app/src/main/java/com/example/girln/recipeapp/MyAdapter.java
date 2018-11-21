@@ -23,12 +23,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 import static java.lang.Math.round;
 
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -36,10 +39,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<item_recipe> item_recipeArrayList;
     private Context context;
     private FirebaseDatabase firebase = FirebaseDatabase.getInstance();
+    private FirebaseStorage storage;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference fb = firebase.getReference();
 
     MyAdapter(ArrayList<item_recipe> item_recipeArrayList) {
+        this.notifyDataSetChanged();
         this.item_recipeArrayList = item_recipeArrayList;
     }
 
@@ -53,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         final int positiont = position;
         final String key = (item_recipeArrayList.get(position).key);
@@ -64,6 +69,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        System.out.println(item_recipeArrayList.get(position).title);
         List pics = item_recipeArrayList.get(position).cookingPictures;
         Uri myUri = Uri.parse(pics.get(0).toString());
+
+        System.out.println(myUri);
         GlideApp.with(context)
                 .load(myUri)
                 .override(160, 80)
@@ -104,7 +111,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 String recipeID=tmp.getKey();
                 Intent intent = new Intent(context,edit.class );
                 intent.putExtra("recipeID", recipeID);
-               context.startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }

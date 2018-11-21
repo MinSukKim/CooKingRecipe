@@ -38,7 +38,6 @@ public class MyRecipe extends AppCompatActivity {
     private List RList;
     private Map tmp;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String rEmail = null;
 
 
     @Override
