@@ -163,7 +163,7 @@ public class Upload extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(Upload.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                            picList.add(ref.toString());
+                            picList.add(ref.getDownloadUrl().toString());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
