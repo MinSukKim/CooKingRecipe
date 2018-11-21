@@ -1,10 +1,8 @@
 package com.example.girln.recipeapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,25 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 import static java.lang.Math.round;
 
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -87,10 +77,11 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((MyViewHolder) holder).tvtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                item_recipe tmp = new item_recipe();
-                tmp = item_recipeArrayList.get(positiont);
-                Intent intent = new Intent(context, Detailrecipe.class);
-                intent.putExtra("Object", tmp);
+                item_recipe  tmp = (item_recipe)item_recipeArrayList.get(positiont);
+                String recipeID=tmp.getKey();
+                Intent intent = new Intent(context, detailedRecipeView.class);
+               // intent.putExtra("Object", tmp);
+                intent.putExtra("recipeID", recipeID);
                 context.startActivity(intent);
             }
         });
@@ -106,7 +97,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((MyViewHolder) holder).editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("test");
                 item_recipe tmp =(item_recipe) item_recipeArrayList.get(positiont);
                 String recipeID=tmp.getKey();
                 Intent intent = new Intent(context,edit.class );

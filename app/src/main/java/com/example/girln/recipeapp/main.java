@@ -41,7 +41,7 @@ public class main extends AppCompatActivity
     private Fragment settingFragment;
     private Fragment sharedFragment;
 
-    public Search_F searchfun;
+    //public Search_F searchfun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
