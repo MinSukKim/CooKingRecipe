@@ -49,26 +49,22 @@ public class detailedRecipeView extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        ratingBar=(RatingBar) findViewById(R.id.ratingBar);
-        commentField=(EditText)  findViewById(R.id.commentTextField);
+        ratingBar= findViewById(R.id.ratingBar);
+        commentField= findViewById(R.id.commentTextField);
         getRecipe(recipeID);
     }
 
     void afterCreate() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView tbTitle = (TextView) findViewById(R.id.toolbarTitle);
+        TextView tbTitle = findViewById(R.id.toolbarTitle);
         tbTitle.setText(recipe.getRecipeName());
+
         LinearLayout pictureLL = findViewById(R.id.imageShow);
-        //ImageView imageView3=findViewById(R.id.imageView3);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
         for (CookingPicturesURL picturesURL : recipe.getCookingPictures()) {
             ImageView pic = new ImageView(this);
-            /*Glide.with(this)
-                    .load(picturesURL)
-                    .into(pic);*/
-
             /*GlideApp.with(this)
                     .load(picturesURL)
                     .into(pic);*/
@@ -76,13 +72,58 @@ public class detailedRecipeView extends AppCompatActivity {
             pictureLL.addView(pic);
         }
 
-        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        TextView tvTitle = findViewById(R.id.tvTitle);
         tvTitle.setText(recipe.getRecipeName());
 
-
-
         LinearLayout ingredientList = findViewById(R.id.ingredientList);
+        populatingIngredient(lparams, ingredientList);
 
+        LinearLayout stepList = findViewById(R.id.stepList);
+        populatingSteps(lparams, stepList);
+
+        LinearLayout tagList = findViewById(R.id.tagList);
+        populatingTags(lparams, tagList);
+
+    }
+
+    private void populatingTags(LinearLayout.LayoutParams lparams, LinearLayout tagList) {
+        for (CookingTagsModel tag : recipe.getCookingTags()) {
+            LinearLayout singleTagLayout = new LinearLayout(this);
+            singleTagLayout.setOrientation(LinearLayout.HORIZONTAL);
+            singleTagLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+            TextView tagName = new TextView(this);
+            tagName.setText(tag.getTagName());
+            tagName.setLayoutParams(lparams);
+            singleTagLayout.addView(tagName);
+
+            tagList.addView(singleTagLayout);
+        }
+    }
+
+    private void populatingSteps(LinearLayout.LayoutParams lparams, LinearLayout stepList) {
+        int i = 0;
+        for (CookingStepsModel step : recipe.getCookingSteps()) {
+            LinearLayout singleStepLayout = new LinearLayout(this);
+            singleStepLayout.setOrientation(LinearLayout.HORIZONTAL);
+            singleStepLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+            TextView stepNumber = new TextView(this);
+            stepNumber.setText((++i) + " :");
+            stepNumber.setLayoutParams(lparams);
+            singleStepLayout.addView(stepNumber);
+
+            LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2);
+            TextView stepDescription = new TextView(this);
+            stepDescription.setText(step.getDescription());
+            stepDescription.setLayoutParams(lparams2);
+            singleStepLayout.addView(stepDescription);
+
+            stepList.addView(singleStepLayout);
+        }
+    }
+
+    private void populatingIngredient(LinearLayout.LayoutParams lparams, LinearLayout ingredientList) {
         for (CookingIngredientModel ingredient : recipe.getCookingIngredients()) {
             LinearLayout singleIngredientLayout = new LinearLayout(this);
             singleIngredientLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -106,45 +147,8 @@ public class detailedRecipeView extends AppCompatActivity {
 
             ingredientList.addView(singleIngredientLayout);
         }
-
-        LinearLayout stepList = findViewById(R.id.stepList);
-
-        int i = 0;
-        for (CookingStepsModel step : recipe.getCookingSteps()) {
-            LinearLayout singleStepLayout = new LinearLayout(this);
-            singleStepLayout.setOrientation(LinearLayout.HORIZONTAL);
-            singleStepLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
-            TextView stepNumber = new TextView(this);
-            stepNumber.setText((++i) + " :");
-            stepNumber.setLayoutParams(lparams);
-            singleStepLayout.addView(stepNumber);
-
-            LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2);
-            TextView stepDescription = new TextView(this);
-            stepDescription.setText(step.getDescription());
-            stepDescription.setLayoutParams(lparams2);
-            singleStepLayout.addView(stepDescription);
-
-            stepList.addView(singleStepLayout);
-        }
-
-        LinearLayout tagList = findViewById(R.id.tagList);
-
-        for (CookingTagsModel tag : recipe.getCookingTags()) {
-            LinearLayout singleTagLayout = new LinearLayout(this);
-            singleTagLayout.setOrientation(LinearLayout.HORIZONTAL);
-            singleTagLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
-            TextView tagName = new TextView(this);
-            tagName.setText(tag.getTagName());
-            tagName.setLayoutParams(lparams);
-            singleTagLayout.addView(tagName);
-
-            tagList.addView(singleTagLayout);
-        }
-
     }
+
     public void rateRecipe(View v){
         if(mUser.getUid()!=null)
         mData.getReference().child("Ratings").child(recipeID).child(mUser.getUid()).setValue(ratingBar.getRating());
