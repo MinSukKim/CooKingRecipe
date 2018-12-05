@@ -82,7 +82,7 @@ public class Upload extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        imageView = (ImageView) findViewById(R.id.imageView2);
+        imageView = findViewById(R.id.imageView2);
         mData.getReference().child("Tags").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -163,7 +163,7 @@ public class Upload extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(Upload.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                            picList.add(ref.getDownloadUrl().toString());
+                            picList.add(ref.getName());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
