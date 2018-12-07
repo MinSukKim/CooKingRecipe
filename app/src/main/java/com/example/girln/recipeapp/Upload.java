@@ -51,8 +51,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Upload extends AppCompatActivity {
-    private FirebaseDatabase mData;
-    private FirebaseAuth mUser;
+     FirebaseDatabase mData;
+     FirebaseAuth mUser;
     RecipeModel recipe;
     ArrayList<String> tagList = new ArrayList<>();
 
@@ -67,11 +67,11 @@ public class Upload extends AppCompatActivity {
 
     FirebaseStorage storage;
     StorageReference storageReference;
-    private ImageView imageView;
+     ImageView imageView;
 
-    private Uri filePath;
+     Uri filePath;
 
-    private final int PICK_IMAGE_REQUEST = 71;
+     final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +205,7 @@ public class Upload extends AppCompatActivity {
     }
 
     @NonNull
-    private Button getDeleteTagButton(final LinearLayout tagLL, final LinearLayout newTag) {
+     Button getDeleteTagButton(final LinearLayout tagLL, final LinearLayout newTag) {
         Button deleteTagFieldButton=new Button(this);
         deleteTagFieldButton.setText("Delete");
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
@@ -237,7 +237,7 @@ public class Upload extends AppCompatActivity {
     }
 
     @NonNull
-    private Button getDeleteIngredientButton(final LinearLayout ingredientLL, final LinearLayout newTag) {
+     Button getDeleteIngredientButton(final LinearLayout ingredientLL, final LinearLayout newTag) {
         Button deleteIngredientFieldButton=new Button(this);
         deleteIngredientFieldButton.setText("Delete");
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
@@ -269,7 +269,7 @@ public class Upload extends AppCompatActivity {
     }
 
     @NonNull
-    private Button getDeleteStepButton(final LinearLayout stepLL, final LinearLayout newStep) {
+     Button getDeleteStepButton(final LinearLayout stepLL, final LinearLayout newStep) {
         Button deleteStepFieldButton=new Button(this);
         deleteStepFieldButton.setText("Delete");
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
