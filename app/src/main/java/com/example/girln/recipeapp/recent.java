@@ -41,7 +41,7 @@ public class recent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_recipe);
+//        setContentView(R.layout.activity_my_recipe);
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -83,8 +83,8 @@ public class recent extends AppCompatActivity {
                     item_recipeArrayList.add(new item_recipe(uid, pic, title, 0.0, inge, steps, tags, key, false));
 
                 }
-                MyAdapter myAdapter = new MyAdapter(item_recipeArrayList);
-                mRV.setAdapter(myAdapter);
+//                MyAdapter myAdapter = new MyAdapter(item_recipeArrayList);
+//                mRV.setAdapter(myAdapter);
             }
 
             @Override

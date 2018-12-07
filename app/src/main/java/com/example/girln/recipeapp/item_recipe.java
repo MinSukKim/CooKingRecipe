@@ -35,15 +35,15 @@ public class item_recipe implements Serializable {
         this.cookingSteps = cookingSteps;
         this.mypage = mypage;
 
-        getTags(tags);
-        getIngredients(cookingIngredients);
-        getSteps(cookingSteps);
-        getPics(cookingPictures);
+        setTags(tags);
+        setIngredients(cookingIngredients);
+        setSteps(cookingSteps);
+        setPics(cookingPictures);
 
         System.out.println(this.cookingPictures);
     }
 
-    public void getPics(ArrayList cookingPictures) {
+    public void setPics(ArrayList cookingPictures) {
         if (cookingPictures != null) {
             int num = cookingPictures.size();
             for (int i = 0; i < num; i++) {
@@ -56,7 +56,7 @@ public class item_recipe implements Serializable {
         }
     }
 
-    public void getTags(ArrayList tags) {
+    public void setTags(ArrayList tags) {
         int num = tags.size();
         for (int i = 0; i < num; i++) {
             String item = tags.get(i).toString().split("tagName")[1];
@@ -66,7 +66,7 @@ public class item_recipe implements Serializable {
         }
     }
 
-    public void getIngredients(ArrayList cookingIngredients) {
+    public void setIngredients(ArrayList cookingIngredients) {
         int num = cookingIngredients.size();
         for (int i = 0; i < num; i++) {
             Map item = (HashMap) cookingIngredients.get(i);
@@ -80,7 +80,7 @@ public class item_recipe implements Serializable {
 
     }
 
-    public void getSteps(ArrayList cookingSteps) {
+    public void setSteps(ArrayList cookingSteps) {
         int num = cookingSteps.size();
         for (int i = 0; i < num; i++) {
             Map item = (HashMap) cookingSteps.get(i);

@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     SignInButton G_button;
     Button Guest;
     FirebaseAuth mAuth;
-    private final static int RC_SIGN_IN = 1;
+    private final static int RC_SIGN_IN = 0;
     GoogleApiClient mGoogleApiClient;
     FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -100,7 +100,6 @@ public class Login extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -110,7 +109,8 @@ public class Login extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("TAG", "Google sign in failed", e);
-                Toast.makeText(Login.this,"Authentication wrong",Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.main_layout), "Sorry", Snackbar.LENGTH_SHORT).show();
+//                Toast.makeText(Login.this,"Authentication wrong",Toast.LENGTH_SHORT).show();
                 // ...
             }
         }
@@ -124,7 +124,7 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
+//                            Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
                         } else {

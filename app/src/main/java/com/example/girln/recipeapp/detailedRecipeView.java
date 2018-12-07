@@ -64,10 +64,13 @@ public class detailedRecipeView extends AppCompatActivity {
         LinearLayout pictureLL = findViewById(R.id.imageShow);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
         for (CookingPicturesURL picturesURL : recipe.getCookingPictures()) {
+            System.out.println(picturesURL.toString());
+            StorageReference tmp_imgs = storage.getReference().child("images").child(recipe.getUserID()).child(picturesURL.toString());
+            System.out.println(tmp_imgs);
             ImageView pic = new ImageView(this);
-            /*GlideApp.with(this)
-                    .load(picturesURL)
-                    .into(pic);*/
+            GlideApp.with(this)
+                    .load(tmp_imgs)
+                    .into(pic);
             pic.setLayoutParams(lparams);
             pictureLL.addView(pic);
         }
@@ -154,6 +157,7 @@ public class detailedRecipeView extends AppCompatActivity {
         mData.getReference().child("Ratings").child(recipeID).child(mUser.getUid()).setValue(ratingBar.getRating());
         finish();
     }
+
     public void commentRecipe(View v)
     {
         if(mUser.getUid()!=null)
