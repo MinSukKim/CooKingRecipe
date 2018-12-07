@@ -1,24 +1,17 @@
 package com.example.girln.recipeapp;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.bumptech.glide.annotation.GlideModule;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -36,6 +29,7 @@ public class basic extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Fragment recipeFragment = new recipeList();
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -75,7 +69,6 @@ public class basic extends Fragment implements View.OnClickListener {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
 
 
@@ -103,6 +96,7 @@ public class basic extends Fragment implements View.OnClickListener {
         StorageReference refSimple = storage.getReference("recommend.JPG");
         StorageReference refPopular = storage.getReference("garlic_chicken_pasta.jpg");
 
+        System.out.println(refSimple);
 
         GlideApp.with(view)
                 .load(refSimple)
@@ -118,13 +112,18 @@ public class basic extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (v.getId() == R.id.recent) {
-            Intent intent = new Intent(getActivity().getApplicationContext(), recent.class);
-            startActivity(intent);
-        } else if (v.getId() == R.id.popular) {
-            Intent intent = new Intent(getActivity().getApplicationContext(), popular.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getActivity().getApplicationContext(), recent.class);
+//            startActivity(intent);
+            transaction.replace(R.id.container, recipeFragment);
         }
+//        else if (v.getId() == R.id.popular) {
+//            Intent intent = new Intent(getActivity().getApplicationContext(), popular.class);
+//            startActivity(intent);
+//        }
+        transaction.commit();
+
     }
 
 

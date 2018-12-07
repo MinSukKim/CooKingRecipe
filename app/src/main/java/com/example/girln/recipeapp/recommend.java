@@ -35,7 +35,7 @@ public class recommend extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_recipe);
+//        setContentView(R.layout.activity_my_recipe);
         key = getIntent().getStringExtra("searchText");
 
         TextView tbTitle = (TextView) findViewById(R.id.toolbarTitle);
@@ -73,8 +73,8 @@ public class recommend extends AppCompatActivity {
 
                     }
                 }
-                MyAdapter myAdapter = new MyAdapter(item_recipeArrayList);
-                mRV.setAdapter(myAdapter);
+//                MyAdapter myAdapter = new MyAdapter(item_recipeArrayList);
+//                mRV.setAdapter(myAdapter);
             }
 
             @Override

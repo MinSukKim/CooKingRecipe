@@ -3,7 +3,9 @@ package com.example.girln.recipeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 
+import com.example.girln.recipeapp.models.RecipeModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-
+import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,89 +33,110 @@ import static java.lang.Math.round;
 
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    List<String> recipeIdList;
     private ArrayList<item_recipe> item_recipeArrayList;
+    RecipeModel recipe;
     private Context context;
     private FirebaseDatabase firebase = FirebaseDatabase.getInstance();
-    private FirebaseStorage storage;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private DatabaseReference fb = firebase.getReference();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    MyAdapter(ArrayList<item_recipe> item_recipeArrayList) {
+
+    MyAdapter(List<String> recipeIDList) {
         this.notifyDataSetChanged();
-        this.item_recipeArrayList = item_recipeArrayList;
+        this.recipeIdList = recipeIDList;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
         context = parent.getContext();
+        recipe = new RecipeModel();
         return new MyViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        final int positiont = position;
-        final String key = (item_recipeArrayList.get(position).key);
-        List tag = item_recipeArrayList.get(position).cookingTags;
+        String recipeID = recipeIdList.get(position);
+        recipe = getRecipe(recipeID,myViewHolder);
 
-//        System.out.println(key);
-//        System.out.println(item_recipeArrayList.get(position).cookingPictures);
-//        System.out.println(item_recipeArrayList.get(position).title);
-        List pics = item_recipeArrayList.get(position).cookingPictures;
-        Uri myUri = Uri.parse(pics.get(0).toString());
-
-        System.out.println(myUri);
-        GlideApp.with(context)
-                .load(myUri)
-                .override(160, 80)
-                .into(myViewHolder.ivPicture);
-
-        final double rate = round(item_recipeArrayList.get(position).rate);
-        final String title = item_recipeArrayList.get(position).title;
-//        final String uri = item_recipeArrayList.get(position).drawabled;
+    }
+    public void afterCreate(MyViewHolder viewHolder, final String recipeID)
+    {
+//        System.out.println(recipe);
+        viewHolder.tvtitle.setText(recipe.getRecipeName());
+        //        System.out.println(title);
+//        final int positiont = position;
+//        final String key = (item_recipeArrayList.get(position).key);
+//        List tag = item_recipeArrayList.get(position).cookingTags;
+//        List pics = item_recipeArrayList.get(position).cookingPictures;
+//        String pic_url = pics.get(0).toString();
+        ArrayList tem = recipe.getCookingPictures();
+        System.out.println(tem.get(0));
+        StorageReference tmp_imgs = storage.getReference().child("images").child(tem.get(0).toString());
+        System.out.println(tmp_imgs);
 //
-        myViewHolder.tvtitle.setText(item_recipeArrayList.get(position).title);
-        myViewHolder.tvRate.setRating(round(rate));
-        myViewHolder.tvtags.setText(tag.get(0).toString());
-
-        ((MyViewHolder) holder).tvtitle.setOnClickListener(new View.OnClickListener() {
+            GlideApp.with(context)
+                    .load(tmp_imgs)
+                    .into(viewHolder.ivPicture);
+//
+//
+//        final double rate = round(item_recipeArrayList.get(position).rate);
+//        final String title = item_recipeArrayList.get(position).title;
+//
+//        myViewHolder.tvtitle.setText(item_recipeArrayList.get(position).title);
+//        viewHolder.tvRate.setRating(recipe.get);
+//        viewHolder.tvtags.setText(recipe.getCookingTags());
+//
+        ((MyViewHolder) viewHolder).tvtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                item_recipe  tmp = (item_recipe)item_recipeArrayList.get(positiont);
-                String recipeID=tmp.getKey();
                 Intent intent = new Intent(context, detailedRecipeView.class);
-               // intent.putExtra("Object", tmp);
                 intent.putExtra("recipeID", recipeID);
                 context.startActivity(intent);
             }
         });
 
-        ((MyViewHolder) holder).deleteBtn.setOnClickListener(new View.OnClickListener() {
+//        ((MyViewHolder) viewHolder).deleteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fb = FirebaseDatabase.getInstance().getReference().child("Recipes").child(recipeID);
+//                fb.removeValue();
+//            }
+//        });
+
+        ((MyViewHolder) viewHolder).editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fb = FirebaseDatabase.getInstance().getReference().child("Recipes").child(key);
-                fb.removeValue();
-            }
-        });
-//
-        ((MyViewHolder) holder).editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                item_recipe tmp =(item_recipe) item_recipeArrayList.get(positiont);
-                String recipeID=tmp.getKey();
+
                 Intent intent = new Intent(context,edit.class );
-                intent.putExtra("recipeID", recipeID);
+                intent.putExtra("recipe",recipeID);
                 context.startActivity(intent);
             }
         });
     }
 
+
+    private RecipeModel getRecipe(final String recipeID, final MyViewHolder myViewHolder) {
+        System.out.println(recipeID);
+        firebase.getReference().child("Recipes").child(recipeID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                recipe = dataSnapshot.getValue(RecipeModel.class);
+               afterCreate(myViewHolder,recipeID);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("TAG", "Failed to read value.", databaseError.toException());
+            }
+        });
+        return recipe;
+    }
+
     @Override
     public int getItemCount() {
-        return item_recipeArrayList.size();
+        return recipeIdList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

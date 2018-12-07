@@ -16,7 +16,7 @@ public class popular extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_recipe);
+//        setContentView(R.layout.activity_my_recipe);
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
