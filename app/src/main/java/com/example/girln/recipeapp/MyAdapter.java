@@ -88,7 +88,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        viewHolder.tvRate.setRating(recipe.get);
 //        viewHolder.tvtags.setText(recipe.getCookingTags());
 //
-        ((MyViewHolder) viewHolder).tvtitle.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tvtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, detailedRecipeView.class);
@@ -105,12 +105,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //            }
 //        });
 
-        ((MyViewHolder) viewHolder).editBtn.setOnClickListener(new View.OnClickListener() {
+        viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(context,edit.class );
-                intent.putExtra("recipe",recipeID);
+                intent.putExtra("recipeID",recipeID);
                 context.startActivity(intent);
             }
         });
@@ -118,12 +118,11 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private RecipeModel getRecipe(final String recipeID, final MyViewHolder myViewHolder) {
-        System.out.println(recipeID);
         firebase.getReference().child("Recipes").child(recipeID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 recipe = dataSnapshot.getValue(RecipeModel.class);
-               afterCreate(myViewHolder,recipeID);
+                afterCreate(myViewHolder,recipeID);
             }
 
             @Override

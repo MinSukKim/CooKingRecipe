@@ -52,7 +52,6 @@ public class edit extends Upload {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         recipeID = i.getStringExtra("recipeID");
-
         getRecipe(recipeID);
     }
 
