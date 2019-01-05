@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 
+import com.example.girln.recipeapp.models.CookingPicturesURL;
 import com.example.girln.recipeapp.models.RecipeModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,14 +73,11 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        List tag = item_recipeArrayList.get(position).cookingTags;
 //        List pics = item_recipeArrayList.get(position).cookingPictures;
 //        String pic_url = pics.get(0).toString();
-        ArrayList tem = recipe.getCookingPictures();
+        ArrayList<CookingPicturesURL> tem = recipe.getCookingPictures();
         if (!tem.isEmpty()) {
-            System.out.println(tem.get(0));
-            StorageReference tmp_imgs = storage.getReference().child("images").child(tem.get(0).toString());
-            System.out.println(tmp_imgs);
-//
+            System.out.println(tem.get(0).getPictureURL());
             GlideApp.with(context)
-                    .load(tmp_imgs)
+                    .load(tem.get(0).getPictureURL())
                     .into(viewHolder.ivPicture);
         }
 //

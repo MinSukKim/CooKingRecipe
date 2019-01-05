@@ -29,8 +29,11 @@ import com.example.girln.recipeapp.models.CookingStepsModel;
 import com.example.girln.recipeapp.models.CookingTagsModel;
 import com.example.girln.recipeapp.models.IngredientUnit;
 import com.example.girln.recipeapp.models.RecipeModel;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -70,6 +73,7 @@ public class Upload extends AppCompatActivity {
      ImageView imageView;
 
      Uri filePath;
+     UploadTask uploadTask;
 
      final int PICK_IMAGE_REQUEST = 71;
 
@@ -157,13 +161,39 @@ public class Upload extends AppCompatActivity {
             progressDialog.show();
             //stores the pic in image/userID path
             final StorageReference ref = storageReference.child("images/"+mUser.getUid()+"/" + UUID.randomUUID().toString());
-            ref.putFile(filePath)
+            uploadTask=ref.putFile(filePath);
+             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(Upload.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                            picList.add(ref.getName());
+                            System.out.println("before");
+                            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                    if (!task.isSuccessful()) {
+                                        throw task.getException();
+                                    }
+
+                                    // Continue with the task to get the download URL
+                                    return ref.getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful()) {
+                                        Uri downloadUri = task.getResult();
+                                        if(downloadUri!=null)
+                                        picList.add(downloadUri.toString());
+                                        System.out.println("downloadUri: "+downloadUri);
+                                    } else {
+                                        // Handle failures
+                                        // ...
+                                    }
+                                }
+                            });
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
