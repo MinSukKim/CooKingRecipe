@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +59,11 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         String recipeID = recipeIdList.get(position);
-        recipe = getRecipe(recipeID,myViewHolder);
+        recipe = getRecipe(recipeID, myViewHolder);
 
     }
-    public void afterCreate(MyViewHolder viewHolder, final String recipeID)
-    {
+
+    public void afterCreate(MyViewHolder viewHolder, final String recipeID) {
 //        System.out.println(recipe);
         viewHolder.tvtitle.setText(recipe.getRecipeName());
         //        System.out.println(title);
@@ -72,13 +73,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        List pics = item_recipeArrayList.get(position).cookingPictures;
 //        String pic_url = pics.get(0).toString();
         ArrayList tem = recipe.getCookingPictures();
-        System.out.println(tem.get(0));
-        StorageReference tmp_imgs = storage.getReference().child("images").child(tem.get(0).toString());
-        System.out.println(tmp_imgs);
+        if (!tem.isEmpty()) {
+            System.out.println(tem.get(0));
+            StorageReference tmp_imgs = storage.getReference().child("images").child(tem.get(0).toString());
+            System.out.println(tmp_imgs);
 //
             GlideApp.with(context)
                     .load(tmp_imgs)
                     .into(viewHolder.ivPicture);
+        }
 //
 //
 //        final double rate = round(item_recipeArrayList.get(position).rate);
@@ -109,8 +112,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context,edit.class );
-                intent.putExtra("recipeID",recipeID);
+                Intent intent = new Intent(context, edit.class);
+                intent.putExtra("recipeID", recipeID);
                 context.startActivity(intent);
             }
         });
@@ -122,7 +125,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 recipe = dataSnapshot.getValue(RecipeModel.class);
-                afterCreate(myViewHolder,recipeID);
+                afterCreate(myViewHolder, recipeID);
             }
 
             @Override
