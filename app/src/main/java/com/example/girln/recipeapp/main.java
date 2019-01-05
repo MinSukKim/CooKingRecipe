@@ -24,11 +24,7 @@ public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment basicFragment = new basic();
-    private Fragment profileFragment= new profile();
-    private Fragment activityFragment= new activity();
-    private Fragment settingFragment = new setting();
-    private Fragment sharedFragment = new shared();
-    private Fragment recipeFragment = new recipeList();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +96,12 @@ public class main extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
+        Fragment profileFragment= new profile();
+        Fragment activityFragment= new activity();
+        Fragment settingFragment = new setting();
+        Fragment sharedFragment = new shared();
+        Fragment recipeFragment = new recipeList();
 
         int id = item.getItemId();
 
