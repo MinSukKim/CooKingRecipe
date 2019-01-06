@@ -114,14 +114,13 @@ public class basic extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (v.getId() == R.id.recent) {
-//            Intent intent = new Intent(getActivity().getApplicationContext(), recent.class);
-//            startActivity(intent);
+
             transaction.replace(R.id.container, recipeFragment);
         }
-//        else if (v.getId() == R.id.popular) {
-//            Intent intent = new Intent(getActivity().getApplicationContext(), popular.class);
-//            startActivity(intent);
-//        }
+        else if (v.getId() == R.id.popular) {
+
+            transaction.replace(R.id.container, recipeFragment);
+        }
         transaction.commit();
 
     }
