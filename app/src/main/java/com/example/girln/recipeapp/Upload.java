@@ -71,7 +71,7 @@ public class Upload extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
      ImageView imageView;
-
+Button picViewButton;
      Uri filePath;
      UploadTask uploadTask;
 
@@ -87,6 +87,8 @@ public class Upload extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         imageView = findViewById(R.id.imageView2);
+        picViewButton=findViewById(R.id.picViewButton);
+        picViewButton.setEnabled(false);
         mData.getReference().child("Tags").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -137,6 +139,7 @@ public class Upload extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

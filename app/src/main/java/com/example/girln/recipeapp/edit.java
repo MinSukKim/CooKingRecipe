@@ -53,6 +53,7 @@ public class edit extends Upload {
         Intent i = getIntent();
         recipeID = i.getStringExtra("recipeID");
         getRecipe(recipeID);
+        picViewButton.setEnabled(true);
     }
 
     private void addIngredientField(CookingIngredientModel ingredient) {
@@ -134,6 +135,11 @@ public class edit extends Upload {
         mData.getReference().child("Recipes").child(recipeID).setValue(recipe);
         Toast.makeText(edit.this, "Uploaded Recipe", Toast.LENGTH_SHORT).show();
         finish();
+    }
+    public void picView(View v) {
+        Intent intent = new Intent(this, picView.class);
+        intent.putExtra("recipeID", recipeID);
+        startActivity(intent);
     }
 
     private void ingredientAmountTextField(LinearLayout tagLL, LinearLayout newTag,double amount) {
