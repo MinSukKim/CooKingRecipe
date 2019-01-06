@@ -25,7 +25,6 @@ public class main extends AppCompatActivity
 
     private Fragment basicFragment = new basic();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,17 +65,19 @@ public class main extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.main, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String str) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Intent intent = new Intent(getApplicationContext(), recommend.class);
-                intent.putExtra("searchText", s);
+                intent.putExtra("searchText", str);
                 startActivity(intent);
-                return true;
+                return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
