@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.girln.recipeapp.models.CookingIngredientModel;
-import com.example.girln.recipeapp.models.CookingPicturesURL;
+
 import com.example.girln.recipeapp.models.CookingStepsModel;
 import com.example.girln.recipeapp.models.CookingTagsModel;
 import com.example.girln.recipeapp.models.IngredientUnit;
@@ -109,8 +109,8 @@ public class edit extends Upload {
                     for (CookingStepsModel step : recipe.getCookingSteps()) {
                         addStepField(step);
                     }
-                    for (CookingPicturesURL pic : recipe.getCookingPictures()) {
-                        picList.add(pic.getPictureURL());
+                    for (String pic : recipe.getCookingPictures()) {
+                        picList.add(pic);
                     }
                     TextView recipeNameView = findViewById(R.id.RecipeNameField);
                     recipeNameView.setText(recipe.getRecipeName());

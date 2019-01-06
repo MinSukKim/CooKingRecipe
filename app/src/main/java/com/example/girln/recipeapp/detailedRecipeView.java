@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.girln.recipeapp.models.CommentModel;
 import com.example.girln.recipeapp.models.CookingIngredientModel;
-import com.example.girln.recipeapp.models.CookingPicturesURL;
 import com.example.girln.recipeapp.models.CookingStepsModel;
 import com.example.girln.recipeapp.models.CookingTagsModel;
 import com.example.girln.recipeapp.models.RecipeModel;
@@ -63,9 +62,9 @@ public class detailedRecipeView extends AppCompatActivity {
 
         LinearLayout pictureLL = findViewById(R.id.imageShow);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-        for (CookingPicturesURL picturesURL : recipe.getCookingPictures()) {
-            System.out.println(picturesURL.toString());
-            StorageReference tmp_imgs = storage.getReference().child("images").child(recipe.getUserID()).child(picturesURL.toString());
+        for (String picturesURL : recipe.getCookingPictures()) {
+            System.out.println(picturesURL);
+            StorageReference tmp_imgs = storage.getReference().child("images").child(recipe.getUserID()).child(picturesURL);
             System.out.println(tmp_imgs);
             ImageView pic = new ImageView(this);
             GlideApp.with(this)
