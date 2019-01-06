@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 
 import com.example.girln.recipeapp.models.CookingIngredientModel;
-import com.example.girln.recipeapp.models.CookingPicturesURL;
 import com.example.girln.recipeapp.models.CookingStepsModel;
 import com.example.girln.recipeapp.models.CookingTagsModel;
 import com.example.girln.recipeapp.models.IngredientUnit;
@@ -127,7 +126,7 @@ Button picViewButton;
             recipe.getCookingTags().add(new CookingTagsModel(tag.getSelectedItem().toString()));
         }
         for (String s:picList) {
-            recipe.getCookingPictures().add(new CookingPicturesURL(s));
+            recipe.getCookingPictures().add(s);
         }
 
         return recipe;

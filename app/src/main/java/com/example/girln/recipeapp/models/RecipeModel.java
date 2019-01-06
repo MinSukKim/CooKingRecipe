@@ -10,7 +10,7 @@ public class RecipeModel {
     private ArrayList<CookingIngredientModel> cookingIngredients;
     private ArrayList<CookingStepsModel> cookingSteps;
     private ArrayList<CookingTagsModel> cookingTags;
-    private ArrayList<CookingPicturesURL> cookingPictures;
+    private ArrayList<String> cookingPictures;
 
     private void init()
     {
@@ -51,11 +51,11 @@ public class RecipeModel {
     //ArrayList<CookingTimeModel> cookingTime;
 
 
-    public ArrayList<CookingPicturesURL> getCookingPictures() {
+    public ArrayList<String> getCookingPictures() {
         return cookingPictures;
     }
 
-    public void setCookingPictures(ArrayList<CookingPicturesURL> cookingPictures) {
+    public void setCookingPictures(ArrayList<String> cookingPictures) {
         this.cookingPictures = cookingPictures;
     }
 
