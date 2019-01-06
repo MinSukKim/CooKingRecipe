@@ -112,14 +112,16 @@ public class basic extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Fragment recentFragment = new Recent();
+        Fragment popularFragment= new Popular();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (v.getId() == R.id.recent) {
 
-            transaction.replace(R.id.container, recipeFragment);
+            transaction.replace(R.id.container, recentFragment);
         }
         else if (v.getId() == R.id.popular) {
 
-            transaction.replace(R.id.container, recipeFragment);
+            transaction.replace(R.id.container, popularFragment);
         }
         transaction.commit();
 
