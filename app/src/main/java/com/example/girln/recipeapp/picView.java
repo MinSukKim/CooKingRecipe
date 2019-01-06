@@ -91,6 +91,8 @@ public class picView extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             mData.getReference().child("Recipes").child(recipeID).child("cookingPictures").child(String.valueOf(recipe.getCookingPictures().indexOf(pic))).removeValue();
+                            mData.getReference().child("Recipes").child(recipeID).child("cookingPictures").child(String.valueOf(recipe.getCookingPictures().indexOf(pic))).setValue(recipe.getCookingPictures().get(recipe.getCookingPictures().size()-1));
+                            mData.getReference().child("Recipes").child(recipeID).child("cookingPictures").child(String.valueOf(recipe.getCookingPictures().size()-1)).removeValue();
                             StorageReference photoRef = mStorage.getReferenceFromUrl(pic);
                             photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
