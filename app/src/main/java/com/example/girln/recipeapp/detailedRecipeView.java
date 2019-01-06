@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.target.Target;
 import com.example.girln.recipeapp.models.CommentModel;
 import com.example.girln.recipeapp.models.CookingIngredientModel;
 import com.example.girln.recipeapp.models.CookingStepsModel;
@@ -61,14 +62,13 @@ public class detailedRecipeView extends AppCompatActivity {
         tbTitle.setText(recipe.getRecipeName());
 
         LinearLayout pictureLL = findViewById(R.id.imageShow);
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
         for (String picturesURL : recipe.getCookingPictures()) {
             System.out.println(picturesURL);
-            StorageReference tmp_imgs = storage.getReference().child("images").child(recipe.getUserID()).child(picturesURL);
-            System.out.println(tmp_imgs);
             ImageView pic = new ImageView(this);
             GlideApp.with(this)
-                    .load(tmp_imgs)
+                    .load(picturesURL)
+                    .override(Target.SIZE_ORIGINAL,300)
                     .into(pic);
             pic.setLayoutParams(lparams);
             pictureLL.addView(pic);
