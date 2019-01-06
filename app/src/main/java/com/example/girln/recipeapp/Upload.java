@@ -73,6 +73,7 @@ public class Upload extends AppCompatActivity {
 Button picViewButton;
      Uri filePath;
      UploadTask uploadTask;
+    Button uploadRecipeButton;
 
      final int PICK_IMAGE_REQUEST = 71;
 
@@ -81,6 +82,7 @@ Button picViewButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         recipe = new RecipeModel();
+        uploadRecipeButton=findViewById(R.id.UploadRecipeButton);
         mData = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -133,6 +135,7 @@ Button picViewButton;
     }
 
     public void chooseImage(View v) {
+        uploadRecipeButton.setEnabled(false);
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -188,6 +191,7 @@ Button picViewButton;
                                         Uri downloadUri = task.getResult();
                                         if(downloadUri!=null)
                                         picList.add(downloadUri.toString());
+                                        uploadRecipeButton.setEnabled(true);
                                         System.out.println("downloadUri: "+downloadUri);
                                     } else {
                                         // Handle failures
