@@ -20,7 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +45,7 @@ public class Popular extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mData;
-    private Map tmp;
+
 
 
     // TODO: Rename and change types of parameters
@@ -84,28 +88,33 @@ public class Popular extends Fragment {
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map tmp,rate;
+                double sum = 0.0d;
                 Object RList = dataSnapshot.child("Recipes").getValue();
                 List<String> keyList = new ArrayList<String>();
                 tmp = (HashMap) RList;
                 keyList.addAll(tmp.keySet());
+                tmp.clear();
                 for (String key : keyList) {
+                    sum = 0.0d;
                     Object Ratings = dataSnapshot.child("Ratings").child(key).getValue();
-                    System.out.print(Ratings);
-//                    Map n = (HashMap) tmp.get(key);
-//                    getRatings(recieID);
-//                    String uid = (Stpring) n.get("userID");
-//
-//                    if (user != null) {
-//                        for (UserInfo rUser : user.getProviderData()) {
-//                            if (uid.equals(rUser.getUid())) {
-//                                System.out.print(key);
-//                                recipeIDList.add(key);
-//                            }
-//                        }
-//                    }
+                    rate = (HashMap) Ratings;
+                    if (rate != null) {
+                        int size = rate.size();
+                        for (Object i : rate.values()) {
+                            double f = new Double(i.toString()).doubleValue();
+                            sum += f;
+                        }
+                        sum = sum / size;
+                    }
+                    tmp.put(key, sum);
                 }
-//                MyAdapter myAdapter = new MyAdapter(keyList);
-//                mRecyclerView.setAdapter(myAdapter);
+//                System.out.print(tmp+"\n");
+//                keyList.clear();
+                List <String> it = sortByValue(tmp);
+                System.out.print(it);
+                MyAdapter myAdapter = new MyAdapter(it);
+                mRecyclerView.setAdapter(myAdapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -134,6 +143,30 @@ public class Popular extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    public static List<String> sortByValue(final Map<String, Double> map){
+
+        List<String> list = new ArrayList<String>();
+
+        list.addAll(map.keySet());
+
+        Collections.sort(list,new Comparator<Object>(){
+
+            @SuppressWarnings("unchecked")
+
+            public int compare(Object o1,Object o2){
+                Object v1 = map.get(o1);
+                Object v2 = map.get(o2);
+                return ((Comparable<Object>) v2).compareTo(v1);
+            }
+
+        });
+//        Collections.reverse(list); // 주석시 오름차순
+//        System.out.print(list);
+        return list;
+    }
+
+
 
 //    @Override
 //    public void onAttach(Context context) {
