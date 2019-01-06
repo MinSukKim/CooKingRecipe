@@ -44,9 +44,8 @@ public class recipeList extends Fragment {
 
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-    private TextView tvTotal;
     private DatabaseReference mData;
-    private ArrayList<RecipeModel> recipe = new ArrayList<>();
+    private List<String> recipeIDList = new ArrayList();
     private Map tmp;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -94,27 +93,22 @@ public class recipeList extends Fragment {
                 List<String> keyList = new ArrayList<String>();
                 tmp = (HashMap) RList;
                 keyList.addAll(tmp.keySet());
-//                System.out.println(keyList);
-//                for (String key : keyList) {
-//                    Map n = (HashMap) tmp.get(key);
-//                    System.out.println(n);
-//                    String uid = (String) n.get("userID");
-//                    String title = (String) n.get("recipeName");
-//                    ArrayList pic = (ArrayList) n.get("cookingPictures");
-//                    ArrayList inge = (ArrayList) n.get("cookingIngredients");
-//                    ArrayList steps = (ArrayList) n.get("cookingSteps");
-//                    ArrayList tags = (ArrayList) n.get("cookingTags");
-//
-//                    if (user != null) {
-//                        for (UserInfo rUser : user.getProviderData()) {
-//                            if (uid.equals(rUser.getUid())) {
-////                                item_recipeArrayList.add(new item_recipe(uid, pic, title, 0.0, inge, steps, tags, key,true));
-//                                recipe.add(key);
-//                            }
-//                        }
-//                    }
-//                }
-                MyAdapter myAdapter = new MyAdapter(keyList);
+                System.out.println(keyList);
+                for (String key : keyList) {
+                    Map n = (HashMap) tmp.get(key);
+
+                    String uid = (String) n.get("userID");
+
+                    if (user != null) {
+                        for (UserInfo rUser : user.getProviderData()) {
+                            if (uid.equals(rUser.getUid())) {
+                                System.out.print(key);
+                                recipeIDList.add(key);
+                            }
+                        }
+                    }
+                }
+                MyAdapter myAdapter = new MyAdapter(recipeIDList);
                 mRecyclerView.setAdapter(myAdapter);
             }
             @Override
