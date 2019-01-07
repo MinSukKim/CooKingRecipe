@@ -36,7 +36,7 @@ import static java.lang.Math.round;
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<String> recipeIdList;
-    private ArrayList<item_recipe> item_recipeArrayList;
+
     RecipeModel recipe;
     private Context context;
     private FirebaseDatabase firebase = FirebaseDatabase.getInstance();
@@ -75,7 +75,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        String pic_url = pics.get(0).toString();
         ArrayList<String> tem = recipe.getCookingPictures();
         if (!tem.isEmpty()) {
-            System.out.println(tem.get(0));
+//            System.out.println(tem.get(0));
             GlideApp.with(context)
                     .load(tem.get(0))
                     .into(viewHolder.ivPicture);

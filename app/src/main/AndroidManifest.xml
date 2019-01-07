@@ -24,10 +24,7 @@
 
         </activity>
 
-        <activity android:name=".popular" />
-        <activity android:name=".recent" />
         <activity android:name=".recommend" />
-        <activity android:name=".simple" />
         <activity android:name=".Upload" />
         <activity android:name=".picView" />
         <activity android:name=".detailedRecipeView"/>

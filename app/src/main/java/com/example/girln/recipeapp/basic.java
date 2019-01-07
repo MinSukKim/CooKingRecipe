@@ -116,15 +116,12 @@ public class basic extends Fragment implements View.OnClickListener {
         Fragment popularFragment= new Popular();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (v.getId() == R.id.recent) {
-
             transaction.replace(R.id.container, recentFragment);
         }
         else if (v.getId() == R.id.popular) {
-
             transaction.replace(R.id.container, popularFragment);
         }
         transaction.commit();
-
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.girln.recipeapp;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,11 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,30 +26,28 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Recent.OnFragmentInteractionListener} interface
+ * {@link search_result.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Recent#newInstance} factory method to
+ * Use the {@link search_result#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Recent extends Fragment {
+public class search_result extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mData;
-    private Map tmp;
-
+    List<String> recipeIdList = new ArrayList<>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private recipeList.OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
 
-    public Recent() {
+    public search_result() {
         // Required empty public constructor
     }
 
@@ -63,12 +57,13 @@ public class Recent extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment recipeList.
+     * @return A new instance of fragment search_result.
      */
     // TODO: Rename and change types and number of parameters
-    public static recipeList newInstance(String param1, String param2) {
-        recipeList fragment = new recipeList();
+    public static search_result newInstance(String param1, String param2) {
+        search_result fragment = new search_result();
         Bundle args = new Bundle();
+
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
@@ -78,8 +73,10 @@ public class Recent extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getString("key");
+
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
@@ -87,13 +84,29 @@ public class Recent extends Fragment {
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 0;
                 Object RList = dataSnapshot.child("Recipes").getValue();
                 List<String> keyList = new ArrayList<String>();
-                tmp = (HashMap) RList;
+                Map tmp = (HashMap) RList;
                 keyList.addAll(tmp.keySet());
 
-                MyAdapter myAdapter = new MyAdapter(keyList);
-                mRecyclerView.setAdapter(myAdapter);
+                for (String key : keyList) {
+                    Object data = dataSnapshot.child("Recipes").child(key).getValue();
+                    String temp = data.toString();
+
+                    if (temp.contains(mParam1)) {
+                        System.out.print(key+"\n");
+                        recipeIdList.add(i,key);
+                        i+=1;
+                    }
+                }
+                if(recipeIdList.size() > 0){
+                    MyAdapter myAdapter = new MyAdapter(recipeIdList);
+                    mRecyclerView.setAdapter(myAdapter);
+                }
+                else{
+                    Toast.makeText(getActivity(), "Sorry, There are no recipes.", Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -105,7 +118,12 @@ public class Recent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+        System.out.print(mParam1);
+
         ViewGroup basicView = (ViewGroup) inflater.inflate(R.layout.fragment_recipelist, container, false);
+
         mRecyclerView = (RecyclerView) basicView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
 

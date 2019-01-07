@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
 import android.widget.TextView;
@@ -20,8 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment basicFragment = new basic();
 
@@ -65,27 +65,31 @@ public class main extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+        super.onCreateOptionsMenu(menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        System.out.print(searchView);
 
         searchView.setMaxWidth(Integer.MAX_VALUE);
+//        searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String str) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Intent intent = new Intent(getApplicationContext(), recommend.class);
                 intent.putExtra("searchText", str);
                 startActivity(intent);
-                return false;
+                return true;
             }
+
             @Override
             public boolean onQueryTextChange(String s) {
+
                 return false;
             }
         });
-
-        return true;
+//    }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -115,8 +119,10 @@ public class main extends AppCompatActivity
 //
         } else if (id == R.id.nav_activity) {
             transaction.replace(R.id.container, activityFragment);
+
         } else if (id == R.id.nav_setting) {
             transaction.replace(R.id.container, settingFragment);
+
         } else if (id == R.id.nav_logout) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
