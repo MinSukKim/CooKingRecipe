@@ -19,13 +19,20 @@ import com.example.girln.recipeapp.models.CookingIngredientModel;
 import com.example.girln.recipeapp.models.CookingStepsModel;
 import com.example.girln.recipeapp.models.CookingTagsModel;
 import com.example.girln.recipeapp.models.RecipeModel;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.api.GoogleApi;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthProvider;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 import static java.lang.Math.round;
 
@@ -49,8 +56,8 @@ public class detailedRecipeView extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        ratingBar= findViewById(R.id.ratingBar);
-        commentField= findViewById(R.id.commentTextField);
+        ratingBar = findViewById(R.id.ratingBar);
+        commentField = findViewById(R.id.commentTextField);
         getRecipe(recipeID);
     }
 
@@ -68,7 +75,7 @@ public class detailedRecipeView extends AppCompatActivity {
             ImageView pic = new ImageView(this);
             GlideApp.with(this)
                     .load(picturesURL)
-                    .override(Target.SIZE_ORIGINAL,300)
+                    .override(Target.SIZE_ORIGINAL, 300)
                     .into(pic);
             pic.setLayoutParams(lparams);
             pictureLL.addView(pic);
@@ -86,6 +93,43 @@ public class detailedRecipeView extends AppCompatActivity {
         LinearLayout tagList = findViewById(R.id.tagList);
         populatingTags(lparams, tagList);
 
+        LinearLayout commentLL = findViewById(R.id.CommentLayout);
+        ArrayList<CommentModel> comments = getComments(recipeID, commentLL);
+
+
+    }
+
+    private void populatingComments(LinearLayout commentLL, ArrayList<CommentModel> comments) {
+        for (CommentModel commentModel : comments) {
+            TextView commentText = new TextView(this);
+            commentText.setText(commentModel.getUName()+" :"+commentModel.getComment());
+            commentText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            commentLL.addView(commentText);
+        }
+    }
+
+    private ArrayList<CommentModel> getComments(String recipeID, final LinearLayout commentLL) {
+        final ArrayList<CommentModel> comments = new ArrayList<>();
+        mData.getReference().child("Comments").child(recipeID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot comment :
+                        dataSnapshot.getChildren()) {
+                    CommentModel com = comment.getValue(CommentModel.class);
+                    comments.add(com);
+                }
+
+
+                populatingComments(commentLL, comments);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("TAG", "Failed to read value.", databaseError.toException());
+            }
+        });
+        return comments;
     }
 
     private void populatingTags(LinearLayout.LayoutParams lparams, LinearLayout tagList) {
@@ -151,18 +195,24 @@ public class detailedRecipeView extends AppCompatActivity {
         }
     }
 
-    public void rateRecipe(View v){
-        if(mUser.getUid()!=null)
-        mData.getReference().child("Ratings").child(recipeID).child(mUser.getUid()).setValue(ratingBar.getRating());
+    public void rateRecipe(View v) {
+        if (mUser.getUid() != null)
+            mData.getReference().child("Ratings").child(recipeID).child(mUser.getUid()).setValue(ratingBar.getRating());
         finish();
     }
 
-    public void commentRecipe(View v)
-    {
-        if(mUser.getUid()!=null)
-        { CommentModel commentModel=new CommentModel(commentField.getText().toString(),mUser.getUid());
+    public void commentRecipe(View v) {
+        CommentModel commentModel = new CommentModel();
+        if (mUser.getUid() != null) {
+            if(mUser.getCurrentUser()!=null)
+            if(mUser.getCurrentUser().getDisplayName()!=null) {
+                commentModel= new CommentModel(commentField.getText().toString(), mUser.getUid(), mUser.getCurrentUser().getDisplayName());
+            }else
+
+            { commentModel = new CommentModel(commentField.getText().toString(), mUser.getUid(),"anonymous");}
             mData.getReference().child("Comments").child(recipeID).push().setValue(commentModel);
-        finish();}
+            finish();
+        }
     }
 
     public RecipeModel getRecipe(final String recipeID) {
