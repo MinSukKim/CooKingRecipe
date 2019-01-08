@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.girln.recipeapp.models.CookingTagsModel;
 import com.example.girln.recipeapp.models.RecipeModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -67,10 +68,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(recipe.getRating() != null){
             double score = recipe.getRating();
             if(score!=0){
-                System.out.print(score);
                 viewHolder.tvRate.setRating((float) score);
             }
         }
+        String str = "";
+        for (CookingTagsModel tag : recipe.getCookingTags()) {
+            str = str+tag.getTagName()+"  ";
+        }
+        if(str!="")
+            viewHolder.tvtags.setText(str);
 
         viewHolder.tvtitle.setOnClickListener(new View.OnClickListener() {
             @Override
