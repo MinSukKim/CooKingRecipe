@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,6 +35,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import static com.example.girln.recipeapp.UserRights.needsToNotOwn;
+import static com.example.girln.recipeapp.UserRights.needsToOwn;
 import static java.lang.Math.round;
 
 public class detailedRecipeView extends AppCompatActivity {
@@ -95,6 +98,10 @@ public class detailedRecipeView extends AppCompatActivity {
 
         LinearLayout commentLL = findViewById(R.id.CommentLayout);
         ArrayList<CommentModel> comments = getComments(recipeID, commentLL);
+
+        //to prevent people from rating their own recipes
+        Button ratingBtn=findViewById(R.id.ratingButton);
+        needsToNotOwn(ratingBtn,mUser,recipe.getUserID());
 
 
     }
