@@ -73,7 +73,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         String str = "";
         for (CookingTagsModel tag : recipe.getCookingTags()) {
-            str = str+tag.getTagName()+"  ";
+            str = str+"#"+tag.getTagName()+"  ";
         }
         if(str!="")
             viewHolder.tvtags.setText(str);
