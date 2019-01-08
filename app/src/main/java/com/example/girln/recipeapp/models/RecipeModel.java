@@ -11,6 +11,7 @@ public class RecipeModel {
     private ArrayList<CookingStepsModel> cookingSteps;
     private ArrayList<CookingTagsModel> cookingTags;
     private ArrayList<String> cookingPictures;
+    private Double rating;
 
     private void init()
     {
@@ -105,6 +106,13 @@ public class RecipeModel {
         this.cookingTags = cookingTags;
     }
 
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
     /*public ArrayList<CookingTimeModel> getCookingTime() {
         return cookingTime;
     }

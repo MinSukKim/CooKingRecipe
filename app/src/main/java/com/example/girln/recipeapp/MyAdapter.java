@@ -31,15 +31,16 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.girln.recipeapp.UserRights.needsToOwn;
 import static java.lang.Math.round;
 
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<String> recipeIdList;
-
-    RecipeModel recipe;
+    private List<String> recipeIdList;
+    private RecipeModel recipe;
     private Context context;
-    private FirebaseDatabase firebase = FirebaseDatabase.getInstance();
+    private FirebaseAuth mUser;
+    private FirebaseDatabase mData = FirebaseDatabase.getInstance();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
 
@@ -60,6 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         String recipeID = recipeIdList.get(position);
+        mUser= FirebaseAuth.getInstance();
         recipe = getRecipe(recipeID, myViewHolder);
 
     }
@@ -98,14 +100,17 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         });
 
-//        ((MyViewHolder) viewHolder).deleteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fb = FirebaseDatabase.getInstance().getReference().child("Recipes").child(recipeID);
-//                fb.removeValue();
-//            }
-//        });
+        needsToOwn(viewHolder.deleteBtn,mUser,recipe.getUserID());
+        viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mData.getReference().child("Recipes").child(recipeID).removeValue();
+                mData.getReference().child("Comments").child(recipeID).removeValue();
+                mData.getReference().child("Ratings").child(recipeID).removeValue();
+            }
+        });
 
+        needsToOwn(viewHolder.editBtn,mUser,recipe.getUserID());
         viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,11 +120,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 context.startActivity(intent);
             }
         });
+
     }
 
 
     private RecipeModel getRecipe(final String recipeID, final MyViewHolder myViewHolder) {
-        firebase.getReference().child("Recipes").child(recipeID).addListenerForSingleValueEvent(new ValueEventListener() {
+        mData.getReference().child("Recipes").child(recipeID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 recipe = dataSnapshot.getValue(RecipeModel.class);
@@ -155,6 +161,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvtags = view.findViewById(R.id.tv_tags);
             deleteBtn = view.findViewById(R.id.Delete);
             editBtn = view.findViewById(R.id.Edit);
+
         }
 
 
