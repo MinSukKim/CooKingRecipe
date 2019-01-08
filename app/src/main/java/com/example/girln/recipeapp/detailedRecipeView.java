@@ -211,18 +211,15 @@ public class detailedRecipeView extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Map ratedata = (HashMap) dataSnapshot.child("Ratings").child(recipeID).getValue();
-                    System.out.print(ratedata.size());
-                    System.out.print(ratedata.values());
                     double sum = 0;
                     for(Object val : ratedata.values()){
                         sum = sum + Double.parseDouble(val.toString());
                     }
-                    System.out.print(sum);
                     mData.getReference().child("Recipes").child(recipeID).child("rating").setValue(sum/ratedata.size());
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    Log.w("TAG", "Failed to read value in detailedRecipeView_rateRecipe.", databaseError.toException());
                 }
             });
         }
