@@ -33,5 +33,6 @@
         android:layout_height="match_parent"
         android:background="#abd4b4"
         android:cropToPadding="false"
-        app:srcCompat="@drawable/header" />
+        app:srcCompat="@drawable/header"
+        android:onClick="GobackMain"/>
 </LinearLayout>

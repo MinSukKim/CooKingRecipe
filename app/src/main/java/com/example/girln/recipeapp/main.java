@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,13 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         toggle.syncState();
     }
 
+    public void GobackMain(View v){
+        Intent home = new Intent(this, main.class);
+        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(home);
+        finish();
+    }
 
     @Override
     public void onBackPressed() {
@@ -127,7 +135,10 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(main.this, Login.class));
+                Intent here = new Intent(main.this, Login.class);
+                here.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                here.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(here);
             } else {
                 Toast.makeText(main.this, "You are a guest..", Toast.LENGTH_SHORT).show();
             }
@@ -142,6 +153,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         return true;
 
     }
+
 
 }
 

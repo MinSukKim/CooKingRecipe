@@ -14,10 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -93,10 +97,12 @@ public class profile extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("TAG", "User account deleted.");
-                                        FirebaseAuth.getInstance().signOut();
-                                        startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
-
+                                        Log.d("TAG", "User account is deleted.");
+                                        Toast.makeText(getActivity(), "See you next time", Toast.LENGTH_LONG).show();
+                                        Intent here = new Intent(getActivity().getApplicationContext(), Login.class);
+                                        here.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        here.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        startActivity(here);
                                     }
                                 }
                             });

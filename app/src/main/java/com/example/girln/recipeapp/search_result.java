@@ -111,7 +111,7 @@ public class search_result extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("TAG", "Failed to read value.", databaseError.toException());
+                Log.w("TAG", "Failed to read value in search_result.", databaseError.toException());
             }
         });
     }
@@ -120,19 +120,13 @@ public class search_result extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
-        System.out.print(mParam1);
-
         ViewGroup basicView = (ViewGroup) inflater.inflate(R.layout.fragment_recipelist, container, false);
 
         mRecyclerView = (RecyclerView) basicView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayout.LayoutParams mLayoutParams = (LinearLayout.LayoutParams) mRecyclerView.getLayoutParams();
-        mLayoutParams.topMargin = 120;
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutParams(mLayoutParams);
-        mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         return basicView;
     }
 
