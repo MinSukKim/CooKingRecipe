@@ -147,7 +147,6 @@ public class Popular extends Fragment {
     public static List<String> sortByValue(final Map<String, Double> map){
 
         List<String> list = new ArrayList<String>();
-
         list.addAll(map.keySet());
 
         Collections.sort(list,new Comparator<Object>(){
@@ -161,8 +160,7 @@ public class Popular extends Fragment {
             }
 
         });
-//        Collections.reverse(list); // 주석시 오름차순
-//        System.out.print(list);
+
         return list;
     }
 
