@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -77,11 +79,10 @@ public class search_result extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString("key");
 
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
         mData = FirebaseDatabase.getInstance().getReference();
-        mData.addValueEventListener(new ValueEventListener() {
+        mData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int i = 0;
@@ -126,8 +127,10 @@ public class search_result extends Fragment {
 
         mRecyclerView = (RecyclerView) basicView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-
+        LinearLayout.LayoutParams mLayoutParams = (LinearLayout.LayoutParams) mRecyclerView.getLayoutParams();
+        mLayoutParams.topMargin = 120;
         mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutParams(mLayoutParams);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         return basicView;
@@ -139,6 +142,8 @@ public class search_result extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
 //    @Override
 //    public void onAttach(Context context) {
