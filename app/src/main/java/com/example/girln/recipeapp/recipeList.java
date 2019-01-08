@@ -93,7 +93,7 @@ public class recipeList extends Fragment {
                 List<String> keyList = new ArrayList<String>();
                 tmp = (HashMap) RList;
                 keyList.addAll(tmp.keySet());
-                System.out.println(keyList);
+
                 for (String key : keyList) {
                     Map n = (HashMap) tmp.get(key);
 
@@ -102,7 +102,6 @@ public class recipeList extends Fragment {
                     if (user != null) {
                         for (UserInfo rUser : user.getProviderData()) {
                             if (uid.equals(rUser.getUid())) {
-                                System.out.print(key);
                                 recipeIDList.add(key);
                             }
                         }

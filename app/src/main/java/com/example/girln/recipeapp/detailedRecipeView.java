@@ -34,6 +34,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.girln.recipeapp.UserRights.needsToNotOwn;
 import static com.example.girln.recipeapp.UserRights.needsToOwn;
@@ -203,8 +205,27 @@ public class detailedRecipeView extends AppCompatActivity {
     }
 
     public void rateRecipe(View v) {
-        if (mUser.getUid() != null)
+        if (mUser.getUid() != null) {
             mData.getReference().child("Ratings").child(recipeID).child(mUser.getUid()).setValue(ratingBar.getRating());
+            mData.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map ratedata = (HashMap) dataSnapshot.child("Ratings").child(recipeID).getValue();
+                    System.out.print(ratedata.size());
+                    System.out.print(ratedata.values());
+                    double sum = 0;
+                    for(Object val : ratedata.values()){
+                        sum = sum + Double.parseDouble(val.toString());
+                    }
+                    System.out.print(sum);
+                    mData.getReference().child("Recipes").child(recipeID).child("rating").setValue(sum/ratedata.size());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         finish();
     }
 
@@ -237,4 +258,5 @@ public class detailedRecipeView extends AppCompatActivity {
         });
         return recipe;
     }
+
 }

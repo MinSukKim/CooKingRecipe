@@ -113,6 +113,7 @@ public class RecipeModel {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+
     /*public ArrayList<CookingTimeModel> getCookingTime() {
         return cookingTime;
     }
@@ -120,4 +121,5 @@ public class RecipeModel {
     public void setCookingTime(ArrayList<CookingTimeModel> cookingTime) {
         this.cookingTime = cookingTime;
     }*/
+
 }

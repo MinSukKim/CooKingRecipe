@@ -41,8 +41,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private FirebaseAuth mUser;
     private FirebaseDatabase mData = FirebaseDatabase.getInstance();
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-
 
     MyAdapter(List<String> recipeIDList) {
         this.notifyDataSetChanged();
@@ -63,34 +61,26 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         String recipeID = recipeIdList.get(position);
         mUser= FirebaseAuth.getInstance();
         recipe = getRecipe(recipeID, myViewHolder);
-
     }
 
     public void afterCreate(MyViewHolder viewHolder, final String recipeID) {
-//        System.out.println(recipe);
+
         viewHolder.tvtitle.setText(recipe.getRecipeName());
-        //        System.out.println(title);
-//        final int positiont = position;
-//        final String key = (item_recipeArrayList.get(position).key);
-//        List tag = item_recipeArrayList.get(position).cookingTags;
-//        List pics = item_recipeArrayList.get(position).cookingPictures;
-//        String pic_url = pics.get(0).toString();
+
         ArrayList<String> tem = recipe.getCookingPictures();
         if (!tem.isEmpty()) {
-//            System.out.println(tem.get(0));
             GlideApp.with(context)
                     .load(tem.get(0))
                     .into(viewHolder.ivPicture);
         }
-//
-//
-//        final double rate = round(item_recipeArrayList.get(position).rate);
-//        final String title = item_recipeArrayList.get(position).title;
-//
-//        myViewHolder.tvtitle.setText(item_recipeArrayList.get(position).title);
-//        viewHolder.tvRate.setRating(recipe.get);
-//        viewHolder.tvtags.setText(recipe.getCookingTags());
-//
+        if(recipe.getRating() != null){
+            double score = recipe.getRating();
+            if(score!=0){
+                System.out.print(score);
+                viewHolder.tvRate.setRating((float) score);
+            }
+        }
+
         viewHolder.tvtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
