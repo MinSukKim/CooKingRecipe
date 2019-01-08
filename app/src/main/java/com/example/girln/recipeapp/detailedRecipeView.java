@@ -76,7 +76,7 @@ public class detailedRecipeView extends AppCompatActivity {
         LinearLayout pictureLL = findViewById(R.id.imageShow);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
         for (String picturesURL : recipe.getCookingPictures()) {
-            System.out.println(picturesURL);
+//            System.out.println(picturesURL);
             ImageView pic = new ImageView(this);
             GlideApp.with(this)
                     .load(picturesURL)

@@ -114,7 +114,7 @@ public class picView extends AppCompatActivity {
 
                         tr.addView(picView);
                         tr.addView(deleteButton);
-                        System.out.println("after");
+//                        System.out.println("after");
 
                 }
                 TextView PicViewTitle = findViewById(R.id.PicViewTitel);
@@ -143,7 +143,7 @@ public class picView extends AppCompatActivity {
         ImageView picView = new ImageView(context);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 4);
         picView.setLayoutParams(lparams);
-        System.out.println("before");
+//        System.out.println("before");
         GlideApp.with(context)
                 .load(pic)
                 //.centerCrop()
