@@ -84,7 +84,7 @@ public class Login extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(Login.this,"Wrong!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this,"Google Connection Failed!",Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)

@@ -40,7 +40,7 @@ public class Recent extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private List<String> recipeIDList = new ArrayList();
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mData;
@@ -91,8 +91,15 @@ public class Recent extends Fragment {
                 List<String> keyList = new ArrayList<String>();
                 tmp = (HashMap) RList;
                 keyList.addAll(tmp.keySet());
+                for (String key : keyList) {
+                    RList = dataSnapshot.child("Recipes").child(key).child("priv").getValue();
+                    if (RList.toString() == "false"){
+                        System.out.print(key);
+                        recipeIDList.add(key);
+                    }
 
-                MyAdapter myAdapter = new MyAdapter(keyList);
+                }
+                MyAdapter myAdapter = new MyAdapter(recipeIDList);
                 mRecyclerView.setAdapter(myAdapter);
             }
             @Override

@@ -96,18 +96,21 @@ public class Popular extends Fragment {
                 keyList.addAll(tmp.keySet());
                 tmp.clear();
                 for (String key : keyList) {
-                    sum = 0.0d;
-                    Object Ratings = dataSnapshot.child("Ratings").child(key).getValue();
-                    rate = (HashMap) Ratings;
-                    if (rate != null) {
-                        int size = rate.size();
-                        for (Object i : rate.values()) {
-                            double f = new Double(i.toString()).doubleValue();
-                            sum += f;
+                    RList = dataSnapshot.child("Recipes").child(key).child("priv").getValue();
+                    if (RList.toString() == "false") {
+                        sum = 0.0d;
+                        Object Ratings = dataSnapshot.child("Ratings").child(key).getValue();
+                        rate = (HashMap) Ratings;
+                        if (rate != null) {
+                            int size = rate.size();
+                            for (Object i : rate.values()) {
+                                double f = new Double(i.toString()).doubleValue();
+                                sum += f;
+                            }
+                            sum = sum / size;
                         }
-                        sum = sum / size;
+                        tmp.put(key, sum);
                     }
-                    tmp.put(key, sum);
                 }
 //                System.out.print(tmp+"\n");
 //                keyList.clear();
