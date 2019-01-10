@@ -5,6 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item
+
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_camera"
             android:title="MyProfile" />
@@ -24,11 +25,13 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"
             android:title="Sign out" />
+
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
+
                 android:id="@+id/nav_shared"
                 android:icon="@drawable/ic_menu_share"
                 android:title="SharedRecipe" />
@@ -36,6 +39,7 @@
                 android:id="@+id/nav_message"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Message" />
+
         </menu>
     </item>
 

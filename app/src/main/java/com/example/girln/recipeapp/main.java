@@ -1,16 +1,19 @@
 package com.example.girln.recipeapp;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
@@ -26,10 +29,12 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
 
     private Fragment basicFragment = new basic();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         button_create();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -59,6 +64,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(home);
         finish();
+
     }
 
     @Override
@@ -73,6 +79,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -104,11 +111,13 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onSearchRequested() {
         Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
         return super.onSearchRequested();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
 
         Fragment profileFragment= new profile();
         Fragment activityFragment= new activity();
@@ -148,9 +157,11 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
 
         transaction.commit();
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
 
     }
 

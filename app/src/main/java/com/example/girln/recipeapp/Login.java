@@ -29,9 +29,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class Login extends AppCompatActivity {
 
     SignInButton G_button;
+
     Button Guest;
     FirebaseAuth mAuth;
     private final static int RC_SIGN_IN = 0;
+
     GoogleApiClient mGoogleApiClient;
     FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -47,7 +49,9 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         G_button = (SignInButton) findViewById(R.id.googleBtn);
+
         Guest = (Button) findViewById(R.id.Guest);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -58,6 +62,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+
         Guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +70,7 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Guest Login", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -84,11 +90,14 @@ public class Login extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
                         Toast.makeText(Login.this,"Google Connection Failed!",Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
+
     }
 
     private void signIn() {
@@ -96,9 +105,12 @@ public class Login extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
 
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -109,8 +121,10 @@ public class Login extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("TAG", "Google sign in failed", e);
+
                 Snackbar.make(findViewById(R.id.main_layout), "Sorry", Snackbar.LENGTH_SHORT).show();
 //                Toast.makeText(Login.this,"Authentication wrong",Toast.LENGTH_SHORT).show();
+
                 // ...
             }
         }
@@ -124,13 +138,17 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+
 //                            Log.d("TAG", "signInWithCredential:success");
+
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
+
                             Snackbar.make(findViewById(R.id.main_layout), "Failed.", Snackbar.LENGTH_SHORT).show();
+
 //                            updateUI(null);
                         }
 
@@ -140,3 +158,7 @@ public class Login extends AppCompatActivity {
     }
 
 }
+
+
+
+
