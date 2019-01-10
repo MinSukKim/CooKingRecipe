@@ -4,8 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@color/browser_actions_bg_grey"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:id="@+id/container"
     tools:context=".main"
     tools:showIn="@layout/app_bar_main">
 
+    <FrameLayout
+        android:id="@+id/content_fragment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </android.support.constraint.ConstraintLayout>
+
+    <!--android:contentDescription="TODO"-->
+    <!--android:contentDescription="TODO"-->
+
+    <!--android:layout_margin="5dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+
+<!--<TextView-->
+<!--android:id="@+id/title3"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:padding="10dp"-->
+<!--android:text="tes3t" />-->
+    <!--android:scaleType="fitXY"-->

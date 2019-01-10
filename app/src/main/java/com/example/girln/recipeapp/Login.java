@@ -29,9 +29,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class Login extends AppCompatActivity {
 
     SignInButton G_button;
-//    Button Guest;
+
+    Button Guest;
     FirebaseAuth mAuth;
-    private final static int RC_SIGN_IN = 2;
+    private final static int RC_SIGN_IN = 0;
+
     GoogleApiClient mGoogleApiClient;
     FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -47,7 +49,9 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         G_button = (SignInButton) findViewById(R.id.googleBtn);
-//        Guest = (Button) findViewById(R.id.Guest);
+
+        Guest = (Button) findViewById(R.id.Guest);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -57,6 +61,16 @@ public class Login extends AppCompatActivity {
                 signIn();
             }
         });
+
+
+        Guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, main.class));
+                Toast.makeText(Login.this, "Guest Login", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -76,25 +90,28 @@ public class Login extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(Login.this,"Wrong!",Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(Login.this,"Google Connection Failed!",Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
+
     }
-
-
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+
+
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -104,7 +121,10 @@ public class Login extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("TAG", "Google sign in failed", e);
-                Toast.makeText(Login.this,"Authentication wrong",Toast.LENGTH_SHORT).show();
+
+                Snackbar.make(findViewById(R.id.main_layout), "Sorry", Snackbar.LENGTH_SHORT).show();
+//                Toast.makeText(Login.this,"Authentication wrong",Toast.LENGTH_SHORT).show();
+
                 // ...
             }
         }
@@ -118,13 +138,17 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
+
+//                            Log.d("TAG", "signInWithCredential:success");
+
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+
+                            Snackbar.make(findViewById(R.id.main_layout), "Failed.", Snackbar.LENGTH_SHORT).show();
+
 //                            updateUI(null);
                         }
 
